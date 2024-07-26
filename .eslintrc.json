@@ -4,10 +4,11 @@
     "es6": true,
     "node": true
   },
-  // eslint 구문 해석을 위한 paser 주로 bable-eslint, @typescript-eslint/parser 사용
+  // eslint 구문 해석을 위한 paser wnfh bale-eslint, @typescript-eslint/parser 사용
   "parser": "@typescript-eslint/parser",
+  // 서드파티 플러그인
   "plugins": ["@typescript-eslint", "import"],
-  // 적용할 config
+  // 적용할 라이브러리
   "extends": [
     "airbnb",
     "airbnb/hooks",
@@ -15,27 +16,26 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    // eslint-plugin-prettier가 eslint 설정을 덮어쓸수 있도록 마지막에 선언
+    // prettier를 맨마지막에 써서 eslint-plugin-prettier가 설정을 덮을수 있도록한다.
     "plugin:prettier/recommended"
   ],
   // 지원하려는 자바스크립트 언어 옵션 정의
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  /** 커스텀해서 쓸 규칙들 정의
+  /**프로젝트에서 사용할 커스텀 규칙 설정
    off or 0 : 규칙사용 X
    warn or 1 : 규칙을 경고로 사용
    error or 2 : 규칙을 오류로 사용
   */
   "rules": {
-
   },
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [".js", ".jsx", ".ts", ".tsx"]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
-      "typescript": "./tsconfig.json"
+      "typescript": {}
     }
   }
 }
