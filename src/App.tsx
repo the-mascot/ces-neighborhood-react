@@ -1,8 +1,14 @@
-import Routes from 'src/routes/routes';
+import Router from 'src/routes/router';
+import SettingProvider from 'src/context/setting-provider';
+import ThemeProvider from 'src/theme/theme-provider';
 
 function App() {
   return (
-    <Routes />
+    <SettingProvider>
+      <ThemeProvider>
+        <Router />
+      </ThemeProvider>
+    </SettingProvider>
   );
 }
 
