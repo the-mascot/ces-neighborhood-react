@@ -11,26 +11,30 @@ import { useNavData } from 'src/layouts/config-navigation';
 import { useLocation, useNavigate } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
 import { styled } from '@mui/material/styles';
+import paths from 'src/routes/paths';
 
 interface Props {
   mode: PaletteMode;
   toggleColorMode: () => void;
 }
 
-const MenuButton = styled(Button)(({ theme }) => ({
-  variant: 'text',
-  size: 'large',
-  '&:hover': {
-    backgroundColor: theme.palette.grey[100]
-  }
-}));
-
-type ActiveDividerProps = {
+type MenuButtonProps = {
   isActive: boolean;
 };
 
-const ActiveDivider = styled(Divider)<ActiveDividerProps>(({ theme, isActive }) => ({
-  borderBottom: isActive ? '3px solid #ff3f3f94' : 'none'
+const MenuButton = styled(Button)<MenuButtonProps>(({ theme, isActive }) => ({
+  color: theme.palette.grey[800],
+  variant: 'text',
+  size: 'large',
+  borderRadius: '0',
+  borderBottom: isActive ? '3px solid #ff3f3f94' : 'none',
+  '&:hover': {
+    backgroundColor: theme.palette.grey[100]
+  },
+  ...theme.applyStyles('dark', {
+    color: '#fff',
+    borderBottom: isActive ? '3px solid #fff' : 'none'
+  })
 }));
 
 export default function Navigator({ mode, toggleColorMode }: Props) {
@@ -68,9 +72,12 @@ export default function Navigator({ mode, toggleColorMode }: Props) {
             </Box>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               {navData.map((nav) => (
-                <MenuButton key={nav.title} onClick={() => navigate(nav.path)}>
+                <MenuButton
+                  key={nav.title}
+                  onClick={() => navigate(nav.path)}
+                  isActive={location.pathname === nav.path}
+                >
                   <Typography variant="h5">{nav.title}</Typography>
-                  <ActiveDivider isActive={location.pathname === nav.path} />
                 </MenuButton>
               ))}
             </Box>
@@ -83,7 +90,7 @@ export default function Navigator({ mode, toggleColorMode }: Props) {
             }}
           >
             <ToggleColorMode data-screenshot="toggle-mode" mode={mode} toggleColorMode={toggleColorMode} />
-            <Button color="primary" variant="text" size="small">
+            <Button color="primary" variant="text" size="small" onClick={() => navigate(paths.login)}>
               로그인
             </Button>
             <Button color="primary" variant="contained" size="small">
