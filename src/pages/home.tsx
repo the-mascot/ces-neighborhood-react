@@ -7,9 +7,8 @@ import Pricing from 'src/components/Pricing';
 import Features from 'src/components/Features';
 import Testimonials from 'src/components/Testimonials';
 import FAQ from 'src/components/FAQ';
-import Hero from 'src/components/Hero';
 
-export default function Index() {
+export default function Home() {
   return (
     <>
       <Box sx={{ bgcolor: 'background.default' }}>
