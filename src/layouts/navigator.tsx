@@ -11,7 +11,7 @@ import { useNavData } from 'src/layouts/config-navigation';
 import { useLocation, useNavigate } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
 import { styled } from '@mui/material/styles';
-import paths from 'src/routes/paths';
+import { paths } from 'src/routes/paths';
 
 interface Props {
   mode: PaletteMode;
@@ -19,21 +19,21 @@ interface Props {
 }
 
 type MenuButtonProps = {
-  isActive: boolean;
+  active: string | undefined;
 };
 
-const MenuButton = styled(Button)<MenuButtonProps>(({ theme, isActive }) => ({
+const MenuButton = styled(Button)<MenuButtonProps>(({ theme, active }) => ({
   color: theme.palette.grey[800],
   variant: 'text',
   size: 'large',
   borderRadius: '0',
-  borderBottom: isActive ? '3px solid #ff3f3f94' : 'none',
+  borderBottom: active ? '3px solid #ff3f3f94' : 'none',
   '&:hover': {
     backgroundColor: theme.palette.grey[100]
   },
   ...theme.applyStyles('dark', {
     color: '#fff',
-    borderBottom: isActive ? '3px solid #fff' : 'none'
+    borderBottom: active ? '3px solid #fff' : 'none'
   })
 }));
 
@@ -75,7 +75,7 @@ export default function Navigator({ mode, toggleColorMode }: Props) {
                 <MenuButton
                   key={nav.title}
                   onClick={() => navigate(nav.path)}
-                  isActive={location.pathname === nav.path}
+                  active={location.pathname === nav.path ? 'true' : undefined}
                 >
                   <Typography variant="h5">{nav.title}</Typography>
                 </MenuButton>
@@ -90,7 +90,7 @@ export default function Navigator({ mode, toggleColorMode }: Props) {
             }}
           >
             <ToggleColorMode data-screenshot="toggle-mode" mode={mode} toggleColorMode={toggleColorMode} />
-            <Button color="primary" variant="text" size="small" onClick={() => navigate(paths.login)}>
+            <Button color="primary" variant="text" size="small" onClick={() => navigate(paths.auth.login)}>
               로그인
             </Button>
             <Button color="primary" variant="contained" size="small">

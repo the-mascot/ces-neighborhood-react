@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import paths from 'src/routes/paths';
+import { paths } from 'src/routes/paths';
 
 export function useNavData() {
   const data = useMemo(

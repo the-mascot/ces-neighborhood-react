@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -15,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useMutation } from '@tanstack/react-query';
 import { login } from 'src/apis/auth';
+import { LoginReq } from 'src/types/auth.type';
 
 function Copyright(props: any) {
   return (
@@ -36,19 +36,18 @@ export default function Login() {
     handleSubmit,
     setValue,
     formState: { errors }
-  } = useForm();
+  } = useForm<LoginReq>();
 
   const mutation = useMutation({
     mutationFn: login
   });
 
-  const onSubmit = (data: formType) => {
-    const formData: Post = {
-      ...data,
-      id: parseInt(id as string),
-      userId: userInfo.id
-    };
-    mutation.mutate(formData);
+  const onSubmit = (data: LoginReq) => {
+    mutation.mutate(data, {
+      onSuccess: (response) => {
+        navigate('/', { replace: true });
+      }
+    });
   };
 
   /**-------------------------------- useQuery --------------------------------------*/
@@ -68,26 +67,23 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           로그인
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            label="아이디"
+            {...register('userId', { required: 'ID를 입력해주세요' })}
             autoFocus
+            autoComplete="email"
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Password"
             type="password"
-            id="password"
-            autoComplete="current-password"
+            {...register('password', { required: '비밀번호를 입력해주세요' })}
           />
           <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

@@ -1,9 +1,9 @@
-const paths = {
+export const paths = {
   home: '/',
-  login: '/login',
+  auth: {
+    login: '/login'
+  },
   board: {
     main: '/board/main'
   }
 };
-
-export default paths;

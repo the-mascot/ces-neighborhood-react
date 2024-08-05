@@ -1,30 +1,26 @@
-import { useRoutes } from 'react-router-dom';
-import Index from 'src/pages';
-import path from 'src/routes/paths';
+import { useRoutes } from 'react-router';
+import { paths } from 'src/routes/paths';
 import MainLayout from 'src/layouts/main-layout';
-import BoardMain from 'src/pages/board/board-main';
+import Home from 'src/pages/home';
 import Login from 'src/pages/login';
+import BoardMain from 'src/pages/board/board-main';
 
 export default function Router() {
   return useRoutes([
     {
-      path: path.home,
+      path: paths.home,
       element: (
         <MainLayout>
-          <Index />
+          <Home />
         </MainLayout>
       )
     },
     {
-      path: path.login,
-      element: (
-        <MainLayout>
-          <Login />
-        </MainLayout>
-      )
+      path: paths.auth.login,
+      element: <Login />
     },
     {
-      path: path.board.main,
+      path: paths.board.main,
       element: (
         <MainLayout>
           <BoardMain />
