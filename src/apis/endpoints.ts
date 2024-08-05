@@ -6,7 +6,7 @@ const getPath = (path: string) => {
 
 const endpoints = {
   auth: {
-    login: getPath('/login') // 로그인
+    login: getPath('/auth/login') // 로그인
   },
   board: {
     main: getPath('/board/main') // 게시판 메인

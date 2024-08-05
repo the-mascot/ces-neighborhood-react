@@ -5,7 +5,7 @@ const REFRESH_TOKEN_HEADER_NAME = 'Refresh-token';
 
 // Axios 인스턴스를 생성합니다.
 const axiosInstance = axios.create({
-  withCredentials: false,
+  withCredentials: true,
   timeout: 8000
 });
 
@@ -17,7 +17,7 @@ axiosInstance.interceptors.request.use((config) => {
   console.log('===== refreshToken ===== : ', refreshToken);
 
   if (accessToken && refreshToken) {
-    config.headers.setAuthorization(accessToken);
+    config.headers.set(ACCESS_TOKEN_HEADER_NAME, accessToken);
     config.headers.set(REFRESH_TOKEN_HEADER_NAME, refreshToken);
   }
 
@@ -41,22 +41,28 @@ axiosInstance.interceptors.response.use(
 
     return response;
   },
-  (error) => {
-    switch (error) {
-      case 404:
-        resetSession();
-        break;
-      default:
-        return Promise.reject(error);
+  async (error) => {
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+        case 403:
+          logoutAndRedirect();
+          break;
+        default:
+          return Promise.reject(error);
+      }
+    } else {
+      return Promise.reject(error);
     }
   }
 );
 
-/**-------------------------------- 초기화 --------------------------------------*/
-const resetSession = () => {
+/**-------------------------------- funtion --------------------------------------*/
+/*storage session 에서 토큰 삭제 후 로그인 페이지 리다이렉트*/
+const logoutAndRedirect = () => {
   sessionStorage.removeItem(ACCESS_TOKEN_HEADER_NAME);
-  sessionStorage.removeItem(ACCESS_TOKEN_HEADER_NAME);
-  window.location.href = `${window.location.origin}/`;
+  sessionStorage.removeItem(REFRESH_TOKEN_HEADER_NAME);
+  //window.location.href = `${window.location.origin}/login`;
 };
 
 export default axiosInstance;

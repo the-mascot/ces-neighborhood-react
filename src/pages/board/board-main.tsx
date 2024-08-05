@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Post } from 'src/types/board.type';
 import { fetchPosts } from 'src/apis/posts';
-import LoadingSpinner from 'src/components/loading-spinner';
+import LoadingSpinner from 'src/components/loading/loading-spinner';
 import ErrorModal from 'src/components/error-modal';
 
 export default function BoardMain() {
