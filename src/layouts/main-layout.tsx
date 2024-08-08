@@ -1,5 +1,5 @@
 import { Container, Grid } from '@mui/material';
-import Main from './main';
+import Main from './common/main';
 import Navigator from 'src/layouts/navigator';
 import * as React from 'react';
 import { useContext } from 'react';
