@@ -6,7 +6,11 @@ const getPath = (path: string) => {
 
 const endpoints = {
   auth: {
-    login: getPath('/auth/login') // 로그인
+    login: getPath('/auth/login'), // 로그인
+    join: getPath('/auth/join') // 회원가입
+  },
+  member: {
+    check: getPath('/member/check') // ID 중복확인
   },
   board: {
     main: getPath('/board/main') // 게시판 메인

@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import ToggleColorMode from '../components/ToggleColorMode';
-import { ReactComponent as NeighborhoodLogo } from 'src/assets/images/Neighborhood-logo.svg';
+import { ReactComponent as NeighborhoodLogo } from 'src/assets/images/neighborhood_logo.svg';
 import { useNavData } from 'src/layouts/config-navigation';
 import { useLocation, useNavigate } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';

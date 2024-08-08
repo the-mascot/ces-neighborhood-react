@@ -6,8 +6,9 @@
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.0.13",
+    "@hookform/resolvers": "^3.9.0",
     "@mui/icons-material": "^5.16.6",
-    "@mui/material": "^5.16.5",
+    "@mui/material": "^5.16.6",
     "@reduxjs/toolkit": "^2.2.6",
     "@tanstack/react-query": "^5.51.11",
     "@tanstack/react-query-devtools": "^5.51.11",
@@ -21,6 +22,7 @@
     "axios": "^1.7.2",
     "env-cmd": "^10.1.0",
     "framer-motion": "^11.3.21",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
@@ -29,7 +31,8 @@
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "set PORT=3000 && react-app-rewired start",

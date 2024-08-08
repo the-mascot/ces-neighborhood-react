@@ -1,7 +1,8 @@
 export const paths = {
   home: '/',
   auth: {
-    login: '/login'
+    login: '/login',
+    join: '/join'
   },
   board: {
     main: '/board/main'

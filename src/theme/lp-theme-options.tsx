@@ -67,7 +67,8 @@ export const green = {
   600: '#136C13',
   700: '#0A470A',
   800: '#042F04',
-  900: '#021D02'
+  900: '#021D02',
+  naver: '#03C75A'
 };
 
 const getDesignTokens = (mode: PaletteMode) => ({
@@ -302,6 +303,7 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
             boxShadow: 'none',
             borderRadius: '10px',
             textTransform: 'none',
+            fontFamily: 'Pretendard',
             '&:active': {
               transform: 'scale(0.98)'
             },
@@ -309,7 +311,7 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
               maxHeight: '32px'
             }),
             ...(ownerState.size === 'medium' && {
-              height: '40px'
+              height: '50px'
             }),
             ...(ownerState.variant === 'contained' &&
               ownerState.color === 'primary' && {
@@ -324,15 +326,21 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
                   boxShadow: `0 0 0 1px  ${alpha(brand[300], 0.5)}`
                 }
               }),
-            ...(ownerState.variant === 'outlined' && {
-              backgroundColor: alpha(brand[300], 0.1),
-              borderColor: brand[300],
-              color: brand[500],
-              '&:hover': {
-                backgroundColor: alpha(brand[300], 0.3),
-                borderColor: brand[200]
-              }
-            }),
+            ...(ownerState.variant === 'contained' &&
+              ownerState.color === 'success' && {
+                color: '#ffffff',
+                background: green['naver'],
+                '&:hover': {
+                  background: green['naver'],
+                  backgroundImage: 'none',
+                  boxShadow: `0 0 0 1px  ${alpha(brand[300], 0.5)}`
+                }
+              }),
+            ...(ownerState.variant === 'outlined' &&
+              ownerState.color === 'secondary' && {
+                color: gray[900],
+                outline: `1px solid ${gray[100]}`
+              }),
             ...(ownerState.variant === 'text' && {
               color: brand[500],
               '&:hover': {
@@ -575,7 +583,7 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
             '& .MuiOutlinedInput-root': {
               boxSizing: 'border-box',
               minWidth: 280,
-              minHeight: 40,
+              minHeight: 50,
               height: '100%',
               borderRadius: '10px',
               border: '1px solid',

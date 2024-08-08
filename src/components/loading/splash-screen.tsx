@@ -3,7 +3,7 @@ import { m } from 'framer-motion';
 import { alpha } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 //
-import { ReactComponent as NeighborhoodLogo } from 'src/assets/images/Neighborhood-logo.svg';
+import { ReactComponent as NeighborhoodLogo } from 'src/assets/images/neighborhood_logo.svg';
 
 // ----------------------------------------------------------------------
 
