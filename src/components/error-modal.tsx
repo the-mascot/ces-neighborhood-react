@@ -1,5 +1,5 @@
-import { Box, Button, Modal, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Box, Button, Grid, Modal, Typography } from '@mui/material';
+import { memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const style = {
@@ -9,32 +9,50 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '0px',
   boxShadow: 24,
   p: 4
 };
 
-export default function ErrorModal() {
+type Props = {
+  message?: React.ReactNode;
+};
+
+function ErrorModal({ message }: Props) {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(true);
   const handleOnClick = () => {
     setOpen(false);
     navigate(-1);
   };
+  /**-------------------------------- components --------------------------------------*/
+  /*기본메세지*/
+  const DefaultMessage = () => {
+    return (
+      <>
+        <Typography variant="subtitle1">에러가 발생했습니다.</Typography>
+        <Typography variant="subtitle1">잠시후에 다시 시도해주십시오.</Typography>
+      </>
+    );
+  };
 
   return (
     <Modal open={open}>
       <Box sx={style}>
-        <Typography variant="subtitle1" sx={{ mb: 2 }}>
-          에러가 발생했습니다.
-        </Typography>
-        <Typography variant="subtitle1" sx={{ mb: 2 }}>
-          잠시후에 다시 시도해주십시오.
-        </Typography>
-        <Button variant="outlined" color="success" onClick={() => handleOnClick()}>
-          확인
-        </Button>
+        <Grid container spacing={2} mb={3}>
+          <Typography variant="h4" color="error" textAlign="center" mb={3}>
+            ERROR
+          </Typography>
+          {message ? message : <DefaultMessage />}
+        </Grid>
+        <Grid container justifyContent="center">
+          <Button fullWidth variant="outlined" color="error" onClick={() => handleOnClick()}>
+            확인
+          </Button>
+        </Grid>
       </Box>
     </Modal>
   );
 }
+
+export default memo(ErrorModal);

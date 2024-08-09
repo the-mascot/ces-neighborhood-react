@@ -16,13 +16,13 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^16.18.79",
     "@types/react": "^18.2.51",
     "@types/react-dom": "^18.2.18",
     "axios": "^1.7.2",
     "env-cmd": "^10.1.0",
     "framer-motion": "^11.3.21",
-    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
@@ -46,7 +46,10 @@
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clear-all": "rm -rf build node_modules",
+    "re-start": "rm -rf build node_modules && yarn install && yarn start",
+    "re-build": "rm -rf build node_modules && yarn install && yarn build"
   },
   "eslintConfig": {
     "extends": [
