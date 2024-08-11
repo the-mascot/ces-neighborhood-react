@@ -1,6 +1,20 @@
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = function override(config, env) {
+    config.module.rules.push({
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+            {
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[hash].[ext]', // 파일 이름 패턴
+                    outputPath: 'fonts/', // 빌드 시 출력 경로
+                    publicPath: '/fonts/' // HTML이나 CSS에서 참조할 때 사용되는 경로
+                }
+            }
+        ]
+    })
+
     /*svgr 설정*/
     config.module.rules.push({
         test: /\.svg$/i, // .svg 확장자를 가진 파일을 대상으로

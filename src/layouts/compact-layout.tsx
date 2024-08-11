@@ -2,6 +2,7 @@
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Copyright from 'src/components/copyright';
+import * as React from 'react';
 //
 
 // ----------------------------------------------------------------------
@@ -13,7 +14,7 @@ type Props = {
 export default function CompactLayout({ children }: Props) {
   return (
     <>
-      <Container component="main">
+      <Container component="main" maxWidth="xs">
         <Stack
           sx={{
             py: 12,
@@ -25,6 +26,7 @@ export default function CompactLayout({ children }: Props) {
           }}
         >
           {children}
+          <Copyright sx={{ mt: 8, mb: 4 }} />
         </Stack>
       </Container>
     </>

@@ -24,6 +24,8 @@ type MenuButtonProps = {
 
 const MenuButton = styled(Button)<MenuButtonProps>(({ theme, active }) => ({
   color: theme.palette.grey[800],
+  fontSize: 21,
+  fontWeight: active ? '600' : '500',
   variant: 'text',
   size: 'large',
   borderRadius: '0',
@@ -77,7 +79,7 @@ export default function Navigator({ mode, toggleColorMode }: Props) {
                   onClick={() => navigate(nav.path)}
                   active={location.pathname === nav.path ? 'true' : undefined}
                 >
-                  <Typography variant="h5">{nav.title}</Typography>
+                  {nav.title}
                 </MenuButton>
               ))}
             </Box>
@@ -90,11 +92,11 @@ export default function Navigator({ mode, toggleColorMode }: Props) {
             }}
           >
             <ToggleColorMode data-screenshot="toggle-mode" mode={mode} toggleColorMode={toggleColorMode} />
-            <Button color="primary" variant="text" size="small" onClick={() => navigate(paths.auth.login)}>
+            <Button color="secondary" variant="text" size="small" onClick={() => navigate(paths.auth.login)}>
               로그인
             </Button>
-            <Button color="primary" variant="contained" size="small">
-              Sign up
+            <Button color="secondary" variant="contained" size="small">
+              회원가입
             </Button>
           </Box>
         </Toolbar>

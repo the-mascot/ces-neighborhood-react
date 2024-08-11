@@ -40,14 +40,18 @@ function ErrorModal({ message }: Props) {
     <Modal open={open}>
       <Box sx={style}>
         <Grid container spacing={2} mb={3}>
-          <Typography variant="h4" color="error" textAlign="center" mb={3}>
-            ERROR
-          </Typography>
-          {message ? message : <DefaultMessage />}
+          <Grid container item justifyContent="center">
+            <Typography variant="h4" color="error" textAlign="center" mb={3}>
+              ERROR
+            </Typography>
+          </Grid>
+          <Grid item>{message ? message : <DefaultMessage />}</Grid>
         </Grid>
         <Grid container justifyContent="center">
           <Button fullWidth variant="outlined" color="error" onClick={() => handleOnClick()}>
-            확인
+            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+              확인
+            </Typography>
           </Button>
         </Grid>
       </Box>

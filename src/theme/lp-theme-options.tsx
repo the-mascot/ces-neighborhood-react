@@ -54,7 +54,7 @@ export const gray = {
   600: '#4C5967',
   700: '#364049',
   800: '#131B20',
-  900: '#090E10'
+  900: '#0D0D0F'
 };
 
 export const green = {
@@ -70,7 +70,6 @@ export const green = {
   900: '#021D02',
   naver: '#03C75A'
 };
-
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
     mode,
@@ -150,49 +149,55 @@ const getDesignTokens = (mode: PaletteMode) => ({
   typography: {
     fontFamily: 'Pretendard',
     h1: {
-      fontSize: 60,
-      fontWeight: 600,
+      fontSize: 32,
+      fontWeight: 900,
       lineHeight: 78 / 70,
       letterSpacing: -0.2
     },
     h2: {
-      fontSize: 48,
-      fontWeight: 600,
+      fontSize: 28,
+      fontWeight: 800,
       lineHeight: 1.2
     },
     h3: {
-      fontSize: 42,
+      fontSize: 26,
+      fontWeight: 700,
       lineHeight: 1.2
     },
     h4: {
-      fontSize: 36,
-      fontWeight: 500,
+      fontSize: 22,
+      fontWeight: 600,
       lineHeight: 1.5
     },
     h5: {
       fontSize: 20,
-      fontWeight: 600
+      fontWeight: 500,
+      lineHeight: 1.5
     },
     h6: {
-      fontSize: 18
+      fontSize: 18,
+      fontWeight: 500,
+      lineHeight: 1.5
     },
     subtitle1: {
-      fontSize: 18
+      fontSize: 22,
+      fontWeight: 600
     },
     subtitle2: {
-      fontSize: 16
+      fontSize: 20,
+      fontWeight: 600
     },
     body1: {
-      fontWeight: 400,
-      fontSize: 15
+      fontSize: 16,
+      fontWeight: 500
     },
     body2: {
-      fontWeight: 400,
-      fontSize: 14
+      fontSize: 15,
+      fontWeight: 400
     },
     caption: {
-      fontWeight: 400,
-      fontSize: 12
+      fontSize: 14,
+      fontWeight: 400
     }
   }
 });
@@ -271,6 +276,7 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
             padding: '12px 16px',
             textTransform: 'none',
             borderRadius: '10px',
+            fontFamily: 'Pretendard',
             fontWeight: 500,
             ...(theme.palette.mode === 'dark' && {
               color: gray[400],
@@ -304,6 +310,7 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
             borderRadius: '10px',
             textTransform: 'none',
             fontFamily: 'Pretendard',
+            fontWeight: 600,
             '&:active': {
               transform: 'scale(0.98)'
             },
@@ -334,6 +341,16 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
                   background: green['naver'],
                   backgroundImage: 'none',
                   boxShadow: `0 0 0 1px  ${alpha(brand[300], 0.5)}`
+                }
+              }),
+            ...(ownerState.variant === 'contained' &&
+              ownerState.color === 'secondary' && {
+                color: '#ffffff',
+                background: gray[900],
+                '&:hover': {
+                  background: gray[700],
+                  backgroundImage: 'none',
+                  boxShadow: `0 0 0 1px  ${alpha(gray[900], 0.5)}`
                 }
               }),
             ...(ownerState.variant === 'outlined' &&
@@ -571,6 +588,11 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
       MuiTextField: {
         styleOverrides: {
           root: ({ theme }) => ({
+            label: {
+              fontFamily: 'Pretendard',
+              fontSize: 14,
+              fontWeight: 400
+            },
             '& label .Mui-focused': {
               color: 'white'
             },
@@ -581,6 +603,9 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
               }
             },
             '& .MuiOutlinedInput-root': {
+              fontFamily: 'Pretendard',
+              fontSize: 17,
+              fontWeight: 500,
               boxSizing: 'border-box',
               minWidth: 280,
               minHeight: 50,
@@ -595,12 +620,12 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
                 background: `${alpha('#FFF', 0.3)}`
               },
               '&:hover': {
-                borderColor: brand[300]
+                borderColor: gray[300]
               },
               '&.Mui-focused': {
-                borderColor: brand[400],
-                outline: '4px solid',
-                outlineColor: brand[200]
+                borderColor: gray[400],
+                outline: '3px solid',
+                outlineColor: gray[600]
               }
             },
             ...(theme.palette.mode === 'dark' && {
@@ -628,6 +653,26 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
                 }
               }
             })
+          })
+        }
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            textAlign: 'start',
+            fontFamily: 'Pretendard',
+            fontWeight: 600,
+            fontSize: '16px',
+            marginBottom: 2
+          })
+        }
+      },
+      MuiFormControlLabel: {
+        styleOverrides: {
+          label: ({ theme }) => ({
+            fontFamily: 'Pretendard',
+            fontWeight: 400,
+            fontSize: '17px'
           })
         }
       }

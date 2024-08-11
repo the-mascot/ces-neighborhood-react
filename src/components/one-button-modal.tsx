@@ -35,7 +35,7 @@ function OneButtonModal({ title, message, buttonMessage, open, onClick }: Props)
           <Grid item>{message}</Grid>
         </Grid>
         <Grid container justifyContent="center">
-          <Button fullWidth variant="contained" color="success" onClick={onClick}>
+          <Button fullWidth variant="contained" color="secondary" onClick={onClick}>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
               {buttonMessage ? buttonMessage : '확인'}
             </Typography>
