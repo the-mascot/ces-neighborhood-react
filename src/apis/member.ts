@@ -6,5 +6,14 @@ import { ApiResponse } from 'src/types/api.response';
 export const checkIdDuplicate = async (userId: string): Promise<ApiResponse<boolean>> => {
   const encodedURL = encodeURIComponent(userId);
 
-  return await axiosInstance.get(`${endpoints.member.check}/${encodedURL}`).then((response: any) => response.data);
+  return await axiosInstance.get(`${endpoints.member.checkId}/${encodedURL}`).then((response: any) => response.data);
+};
+
+/*닉네임 중복체크*/
+export const checkNicknameDuplicate = async (nickname: string): Promise<ApiResponse<boolean>> => {
+  const encodedURL = encodeURIComponent(nickname);
+
+  return await axiosInstance
+    .get(`${endpoints.member.checkNickname}/${encodedURL}`)
+    .then((response: any) => response.data);
 };

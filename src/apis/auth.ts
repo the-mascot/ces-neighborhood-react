@@ -11,3 +11,7 @@ export const login = async (data: LoginReq) => {
 export const join = async (data: JoinReq) => {
   return await axiosInstance.post(endpoints.auth.join, data).then((response: any) => response.data);
 };
+
+export const googleLogin = async () => {
+  return await axiosInstance.get(endpoints.auth.login);
+};

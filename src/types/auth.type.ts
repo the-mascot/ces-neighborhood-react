@@ -6,4 +6,5 @@ export interface LoginReq {
 export interface JoinReq {
   userId: string;
   password: string;
+  nickname: string;
 }

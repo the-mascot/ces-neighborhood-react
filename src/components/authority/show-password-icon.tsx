@@ -10,7 +10,7 @@ type Props = {
 export default function ShowPasswordIcon({ showPassword, setShowPassword }: Props) {
   return (
     <InputAdornment position="end" sx={{ pr: 1 }}>
-      <IconButton aria-label="toggle password visibility" onClick={() => setShowPassword(!showPassword)} edge="end">
+      <IconButton aria-label="비밀번호 보기" onClick={() => setShowPassword(!showPassword)} edge="end">
         {showPassword ? <Visibility /> : <VisibilityOff />}
       </IconButton>
     </InputAdornment>

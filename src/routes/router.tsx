@@ -8,12 +8,11 @@ import { paths } from 'src/routes/paths';
 import MainLayout from 'src/layouts/main-layout';
 import CompactLayout from 'src/layouts/compact-layout';
 // pages
+// index
 import Home from 'src/pages/home';
-
 // authority
 const Login = lazy(() => import('src/pages/authority/login'));
 const Join = lazy(() => import('src/pages/authority/join'));
-
 // board
 const BoardMain = lazy(() => import('src/pages/board/board-main'));
 

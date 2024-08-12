@@ -1,5 +1,6 @@
 // react
 import * as React from 'react';
+import { useState } from 'react';
 // libraries
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -14,29 +15,13 @@ import { LoginReq } from 'src/types/auth.type';
 import { paths } from 'src/routes/paths';
 // components
 import { RouterLink } from 'src/routes/components';
-// @mui
-import {
-  Avatar,
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  Link,
-  OutlinedInput,
-  Stack,
-  TextField,
-  Typography
-} from '@mui/material';
 import { ReactComponent as GoogleLogo } from 'src/assets/images/google_logo.svg';
 import { ReactComponent as NaverLogo } from 'src/assets/images/naver_logo.svg';
-import { alpha, styled } from '@mui/material/styles';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
 import { ReactComponent as NeighborhoodLogo } from 'src/assets/images/neighborhood_logo.svg';
-import ShowPasswordIcon from 'src/components/authority/ShowPasswordIcon';
+import ShowPasswordIcon from 'src/components/authority/show-password-icon';
+// @mui
+import { Box, Button, Checkbox, FormControlLabel, InputLabel, Link, Stack, TextField, Typography } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
 
 const GoogleLoginButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[900],
@@ -83,6 +68,11 @@ export default function Login() {
         navigate('/', { replace: true });
       }
     });
+  };
+
+  /**-------------------------------- 이벤트헨들러 --------------------------------------*/
+  const googleLoginClick = () => {
+    window.location.href = '/oauth2/authorization/google';
   };
 
   return (
@@ -145,7 +135,7 @@ export default function Login() {
           </Stack>
         </Button>
         {/** 구글로그인버튼 */}
-        <GoogleLoginButton fullWidth variant="outlined">
+        <GoogleLoginButton fullWidth variant="outlined" onClick={googleLoginClick}>
           <Stack direction="row" justifyContent="start" alignItems="center">
             <GoogleLogo width="40" height="40" />
             <Typography variant="subtitle2">구글로 시작하기</Typography>
