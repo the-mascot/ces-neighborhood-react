@@ -8,3 +8,8 @@ export interface JoinReq {
   password: string;
   nickname: string;
 }
+
+export interface OAuthLoginReq {
+  code: string;
+  state: string;
+}

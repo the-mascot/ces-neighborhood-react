@@ -71,8 +71,14 @@ export default function Login() {
   };
 
   /**-------------------------------- 이벤트헨들러 --------------------------------------*/
+  const naverLoginClick = () => {
+    const redirectURI = encodeURIComponent('http://localhost:3000/login/naver');
+    window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=UpEJjnGzwwLj_hk4mbB6&response_type=code&redirect_uri=${redirectURI}&state=VLojXtDiDS`;
+  };
+
   const googleLoginClick = () => {
-    window.location.href = '/oauth2/authorization/google';
+    const redirectURI = encodeURIComponent('http://localhost:3000/login/oauth2/code/naver');
+    window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=UpEJjnGzwwLj_hk4mbB6&response_type=code&redirect_uri=${redirectURI}&state=VLojXtDiDS`;
   };
 
   return (
@@ -128,7 +134,7 @@ export default function Login() {
           <Typography variant="subtitle2">로 그 인</Typography>
         </Button>
         {/** 네이버로그인버튼 */}
-        <Button fullWidth variant="contained" color="success" sx={{ mb: 1 }}>
+        <Button fullWidth variant="contained" color="success" sx={{ mb: 1 }} onClick={naverLoginClick}>
           <Stack direction="row" justifyContent="start" alignItems="center">
             <NaverLogo width="40" height="40" />
             <Typography variant="subtitle2">네이버로 시작하기</Typography>

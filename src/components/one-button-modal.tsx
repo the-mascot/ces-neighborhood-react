@@ -23,6 +23,15 @@ type Props = {
 };
 
 function OneButtonModal({ title, message, buttonMessage, open, onClick }: Props) {
+  const DefaultErrorMessage = () => {
+    return (
+      <>
+        <Typography variant="subtitle1">에러가 발생했습니다.</Typography>
+        <Typography variant="subtitle1">잠시후에 다시 시도해주십시오.</Typography>
+      </>
+    );
+  };
+
   return (
     <Modal open={open}>
       <Box sx={style}>
@@ -32,7 +41,7 @@ function OneButtonModal({ title, message, buttonMessage, open, onClick }: Props)
               {title}
             </Typography>
           </Grid>
-          <Grid item>{message}</Grid>
+          <Grid item>{message ? message : <DefaultErrorMessage />}</Grid>
         </Grid>
         <Grid container justifyContent="center">
           <Button fullWidth variant="contained" color="secondary" onClick={onClick}>
