@@ -8,8 +8,11 @@ const endpoints = {
   auth: {
     login: getPath('/auth/login'), // 로그인
     join: getPath('/auth/join'), // 회원가입
-    naverLogin: '/login/oauth2/code/naver', // 네이버로그인
-    googleLogin: '/auth/google/login' // 구글로그인
+    oauth: getPath('/oauth') // oAuth 로그인
+  },
+  oAuth: {
+    naver: 'https://nid.naver.com/oauth2.0/authorize',
+    google: 'https://accounts.google.com/o/oauth2/v2/auth'
   },
   member: {
     checkId: getPath('/member/check/id'), // ID 중복확인

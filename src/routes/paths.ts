@@ -3,7 +3,7 @@ export const paths = {
   auth: {
     login: '/login',
     join: '/join',
-    naver: '/login/naver'
+    oauth: '/login/:registrationId'
   },
   board: {
     main: '/board/main'

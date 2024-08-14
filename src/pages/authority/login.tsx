@@ -22,6 +22,7 @@ import ShowPasswordIcon from 'src/components/authority/show-password-icon';
 // @mui
 import { Box, Button, Checkbox, FormControlLabel, InputLabel, Link, Stack, TextField, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
+import endpoints from 'src/apis/endpoints';
 
 const GoogleLoginButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[900],
@@ -55,7 +56,6 @@ export default function Login() {
   } = useForm<LoginReq>({
     resolver: yupResolver(schema)
   });
-
   /**-------------------------------- useMutation --------------------------------------*/
   const mutation = useMutation({
     mutationFn: login
@@ -71,15 +71,33 @@ export default function Login() {
   };
 
   /**-------------------------------- 이벤트헨들러 --------------------------------------*/
+  /*네이버로 시작하기*/
   const naverLoginClick = () => {
-    const redirectURI = encodeURIComponent('http://localhost:3000/login/naver');
-    window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=UpEJjnGzwwLj_hk4mbB6&response_type=code&redirect_uri=${redirectURI}&state=VLojXtDiDS`;
+    const redirectURI = encodeURIComponent(process.env.REACT_APP_OAUTH_NAVER_REDIRECT_URL as string);
+    const clientId = process.env.REACT_APP_OAUTH_NAVER_CLIENT_ID;
+    const url = `${endpoints.oAuth.naver}?client_id=${clientId}&response_type=code&redirect_uri=${redirectURI}&state=${generateState()}`;
+    window.location.href = url;
   };
 
+  /*구글로 시작하기*/
   const googleLoginClick = () => {
-    const redirectURI = encodeURIComponent('http://localhost:3000/login/oauth2/code/naver');
-    window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=UpEJjnGzwwLj_hk4mbB6&response_type=code&redirect_uri=${redirectURI}&state=VLojXtDiDS`;
+    const redirectURI = encodeURIComponent(process.env.REACT_APP_OAUTH_GOOGLE_REDIRECT_URL as string);
+    const scope = encodeURIComponent(process.env.REACT_APP_OAUTH_GOOGLE_SCOPE as string);
+    const clientId = process.env.REACT_APP_OAUTH_GOOGLE_CLIENT_ID;
+    const url = `${endpoints.oAuth.google}?client_id=${clientId}&response_type=code&redirect_uri=${redirectURI}&state=${generateState()}&scope=${scope}`;
+    console.log('url : ', url);
+    window.location.href = url;
   };
+
+  /**-------------------------------- function --------------------------------------*/
+  // 난수 생성기를 사용하여 state 값 생성
+  function generateState() {
+    const array = new Uint8Array(16); // 16바이트 = 128비트
+    window.crypto.getRandomValues(array);
+
+    // 16진수 문자열로 변환하여 반환
+    return Array.from(array, (byte) => `0${byte.toString(16)}`.slice(-2)).join('');
+  }
 
   return (
     <Stack justifyContent="center" alignItems="center">

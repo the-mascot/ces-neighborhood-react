@@ -44,7 +44,7 @@ export default function Router() {
       children: [
         { path: paths.auth.login, element: <Login /> },
         { path: paths.auth.join, element: <Join /> },
-        { path: paths.auth.naver, element: <NaverLogin /> },
+        { path: paths.auth.oauth, element: <NaverLogin /> },
         { path: paths.error.p403, element: <Page403 /> },
         { path: paths.error.p404, element: <Page404 /> },
         { path: paths.error.p500, element: <Page500 /> },

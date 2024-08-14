@@ -18,14 +18,9 @@ export const join = async (data: JoinReq): Promise<ApiResponse<null>> => {
     .then((response: AxiosResponse<ApiResponse<null>>) => response.data);
 };
 
-/*네이버 oAuth 로그인*/
-export const naverLogin = async (code: string, state: string): Promise<ApiResponse<any>> => {
+/*oAuth 로그인*/
+export const oAuthLogin = async (registrationId: string, code: string, state: string): Promise<ApiResponse<any>> => {
   return await axiosInstance
-    .get(`/login/oauth2/code/naver?code=${code}&state=${state}`)
+    .get(`${endpoints.auth.oauth}/${registrationId}?code=${code}&state=${state}`)
     .then((response: AxiosResponse<ApiResponse<null>>) => response.data);
-};
-
-/*구글 oAuth 로그인*/
-export const googleLogin = async () => {
-  return await axiosInstance.get(endpoints.auth.googleLogin);
 };
