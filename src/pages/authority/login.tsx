@@ -76,6 +76,7 @@ export default function Login() {
     const redirectURI = encodeURIComponent(process.env.REACT_APP_OAUTH_NAVER_REDIRECT_URL as string);
     const clientId = process.env.REACT_APP_OAUTH_NAVER_CLIENT_ID;
     const url = `${endpoints.oAuth.naver}?client_id=${clientId}&response_type=code&redirect_uri=${redirectURI}&state=${generateState()}`;
+    console.log('url : ', url);
     window.location.href = url;
   };
 

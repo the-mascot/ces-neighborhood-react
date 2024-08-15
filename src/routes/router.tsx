@@ -10,7 +10,7 @@ import CompactLayout from 'src/layouts/compact-layout';
 // pages
 // index
 import Home from 'src/pages/home';
-import NaverLogin from 'src/pages/authority/naver-login';
+import OauthLogin from 'src/pages/authority/oauth-login';
 // authority
 const Login = lazy(() => import('src/pages/authority/login'));
 const Join = lazy(() => import('src/pages/authority/join'));
@@ -44,7 +44,7 @@ export default function Router() {
       children: [
         { path: paths.auth.login, element: <Login /> },
         { path: paths.auth.join, element: <Join /> },
-        { path: paths.auth.oauth, element: <NaverLogin /> },
+        { path: paths.auth.oauth, element: <OauthLogin /> },
         { path: paths.error.p403, element: <Page403 /> },
         { path: paths.error.p404, element: <Page404 /> },
         { path: paths.error.p500, element: <Page500 /> },
