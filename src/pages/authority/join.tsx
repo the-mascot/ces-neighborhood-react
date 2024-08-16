@@ -15,7 +15,7 @@ import { checkIdDuplicate, checkNicknameDuplicate } from 'src/apis/member';
 import { JoinReq } from 'src/types/auth.type';
 // components
 import OneButtonModal from 'src/components/one-button-modal';
-import { ReactComponent as NeighborhoodLogo } from 'src/assets/images/neighborhood_logo.svg';
+import { NeighborhoodLogo } from 'src/components/icon/index';
 import ShowPasswordIcon from 'src/components/authority/show-password-icon';
 import ErrorCaption from 'src/components/error-caption';
 import ErrorSuccessCaption from 'src/components/error-success-caption';
@@ -81,7 +81,7 @@ export default function Join() {
   // watch
   const userIdValue = watch('userId');
   const passwordValue = watch('password');
-  const nickNameValue = watch('nickname');
+  const nicknameValue = watch('nickname');
 
   /**-------------------------------- useEffect --------------------------------------*/
   // step 0 다음버튼 비활성화 관리
@@ -174,7 +174,7 @@ export default function Join() {
     const nicknameValidate = async () => {
       // 닉네임 중복 초기화
       setIsDuplicateNickname(null);
-      if (!nickNameValue) {
+      if (!nicknameValue) {
         clearErrors('nickname');
 
         return;
@@ -183,11 +183,11 @@ export default function Join() {
       if (!isNicknameFormat) {
         return;
       }
-      callCheckNicknameDuplicate(nickNameValue);
+      callCheckNicknameDuplicate(nicknameValue);
     };
 
     nicknameValidate();
-  }, [nickNameValue]);
+  }, [nicknameValue]);
 
   /**-------------------------------- useMutation --------------------------------------*/
   /*회원가입 mutation*/
@@ -325,6 +325,7 @@ export default function Join() {
     );
   };
 
+  /*닉네임 필드 상태메시지*/
   const NicknameStatusMessage = () => {
     if (errors.nickname) {
       return <ErrorCaption message={errors.nickname.message} />;

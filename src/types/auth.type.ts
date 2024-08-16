@@ -3,6 +3,11 @@ export interface LoginReq {
   password: string;
 }
 
+export interface LoginRes {
+  nickname: string;
+  profileImage: string;
+}
+
 export interface JoinReq {
   userId: string;
   password: string;
@@ -12,4 +17,9 @@ export interface JoinReq {
 export interface OAuthLoginReq {
   code: string;
   state: string;
+}
+
+export interface OAuthLoginRes {
+  isNewMember: boolean;
+  nickname: string;
 }

@@ -1,3 +1,3 @@
-export interface VerifyIdDuplicateRep {
-  userId: string;
+export interface UpdateMemberInfoReq {
+  nickname: string;
 }

@@ -91,12 +91,8 @@ export default function Navigator({ mode, toggleColorMode }: Props) {
               alignItems: 'center'
             }}
           >
-            <ToggleColorMode data-screenshot="toggle-mode" mode={mode} toggleColorMode={toggleColorMode} />
-            <Button color="secondary" variant="text" size="small" onClick={() => navigate(paths.auth.login)}>
+            <Button color="secondary" variant="text" size="medium" onClick={() => navigate(paths.auth.login)}>
               로그인
-            </Button>
-            <Button color="secondary" variant="contained" size="small">
-              회원가입
             </Button>
           </Box>
         </Toolbar>

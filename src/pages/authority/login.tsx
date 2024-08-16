@@ -10,19 +10,22 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // apis
 import { login } from 'src/apis/auth';
 // types
-import { LoginReq } from 'src/types/auth.type';
+import { LoginReq, LoginRes } from 'src/types/auth.type';
 // paths
 import { paths } from 'src/routes/paths';
 // components
 import { RouterLink } from 'src/routes/components';
 import { ReactComponent as GoogleLogo } from 'src/assets/images/google_logo.svg';
 import { ReactComponent as NaverLogo } from 'src/assets/images/naver_logo.svg';
-import { ReactComponent as NeighborhoodLogo } from 'src/assets/images/neighborhood_logo.svg';
+import { NeighborhoodLogo } from 'src/components/icon';
 import ShowPasswordIcon from 'src/components/authority/show-password-icon';
 // @mui
 import { Box, Button, Checkbox, FormControlLabel, InputLabel, Link, Stack, TextField, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import endpoints from 'src/apis/endpoints';
+import { useDispatch } from 'react-redux';
+import { loginReducer } from 'src/redux/slices/auth-slice';
+import { ApiResponse } from 'src/types/api.response';
 
 const GoogleLoginButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[900],
@@ -47,6 +50,8 @@ export default function Login() {
   const navigate = useNavigate();
   // states
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  // redux
+  const dispatch = useDispatch();
   // useForm
   const {
     register,
@@ -62,9 +67,10 @@ export default function Login() {
   });
 
   /**-------------------------------- onSubmit --------------------------------------*/
-  const onSubmit = async (data: LoginReq) => {
-    mutation.mutate(data, {
-      onSuccess: () => {
+  const onSubmit = async (loginReq: LoginReq) => {
+    mutation.mutate(loginReq, {
+      onSuccess: (data) => {
+        dispatch(loginReducer({ nickname: data.data.nickname, profileImage: data.data.profileImage }));
         navigate('/', { replace: true });
       }
     });
@@ -102,7 +108,7 @@ export default function Login() {
 
   return (
     <Stack justifyContent="center" alignItems="center">
-      <NeighborhoodLogo width="180" height="auto" />
+      <NeighborhoodLogo width="180" height="92" />
       <Typography variant="h3" sx={{ mt: 2 }}>
         로그인
       </Typography>

@@ -6,21 +6,24 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import SplashScreen from 'src/components/loading/splash-screen';
 import { Suspense } from 'react';
 import 'src/fonts/index.css';
+import ReduxProvider from 'src/redux/redux-provider';
 
 function App() {
   const queryClient = new QueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools />
-      <SettingProvider>
-        <ThemeProvider>
-          <Suspense fallback={<SplashScreen />}>
-            <Router />
-          </Suspense>
-        </ThemeProvider>
-      </SettingProvider>
-    </QueryClientProvider>
+    <ReduxProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools />
+        <SettingProvider>
+          <ThemeProvider>
+            <Suspense fallback={<SplashScreen />}>
+              <Router />
+            </Suspense>
+          </ThemeProvider>
+        </SettingProvider>
+      </QueryClientProvider>
+    </ReduxProvider>
   );
 }
 

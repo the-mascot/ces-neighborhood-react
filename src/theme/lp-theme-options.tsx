@@ -188,7 +188,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
       fontWeight: 600
     },
     body1: {
-      fontSize: 16,
+      fontSize: 17,
       fontWeight: 500
     },
     body2: {
@@ -359,7 +359,7 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
                 outline: `1px solid ${gray[100]}`
               }),
             ...(ownerState.variant === 'text' && {
-              color: brand[500],
+              color: gray[800],
               '&:hover': {
                 backgroundColor: alpha(brand[300], 0.3),
                 borderColor: brand[200]
