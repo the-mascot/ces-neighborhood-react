@@ -1,10 +1,11 @@
 // ----------------------------------------------------------------------
 
+const KEY = 'neighborhood-blind';
+
 export function localStorageAvailable() {
   try {
-    const key = '__some_random_key_you_are_not_going_to_use__';
-    window.localStorage.setItem(key, key);
-    window.localStorage.removeItem(key);
+    window.localStorage.setItem(KEY, KEY);
+    window.localStorage.removeItem(KEY);
 
     return true;
   } catch (error) {
@@ -22,4 +23,15 @@ export function localStorageGetItem(key: string, defaultValue = '') {
   }
 
   return value;
+}
+
+export function sessionStorageAvailable() {
+  try {
+    window.sessionStorage.setItem(KEY, KEY);
+    window.sessionStorage.removeItem(KEY);
+
+    return true;
+  } catch (error) {
+    return false;
+  }
 }

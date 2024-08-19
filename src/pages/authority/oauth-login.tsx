@@ -24,6 +24,8 @@ import { debounce } from 'lodash';
 import ErrorCaption from 'src/components/error-caption';
 import SuccessCaption from 'src/components/success-caption';
 import { UpdateMemberInfoReq } from 'src/types/member.type';
+import { useDispatch } from 'react-redux';
+import { loginReducer } from 'src/redux/slices/auth-slice';
 
 const schema = yup.object().shape({
   nickname: yup
@@ -40,13 +42,17 @@ export default function OauthLogin() {
   const codeParams = searchParams.get('code');
   const stateParams = searchParams.get('state');
   const { registrationId } = useParams();
+  // redux
+  const dispatch = useDispatch();
   // states
   const [code, setCode] = useState<string>('');
-  const [state, setState] = useState<string>('');
+  const [csrfState, setCsrfState] = useState<string>('');
   const [openError, setOpenError] = useState<boolean>(false);
   const [disableNext, setDisableNext] = useState<boolean>(false);
   const [isDuplicateNickname, setIsDuplicateNickname] = useState<boolean | null>(null); // 닉네임 중복여부
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // 가입 진행 flag
+
+  /**-------------------------------- useForm --------------------------------------*/
   const form = useForm<UpdateMemberInfoReq>({
     resolver: yupResolver(schema)
   });
@@ -58,9 +64,9 @@ export default function OauthLogin() {
     ApiResponse<OAuthLoginRes>,
     AxiosError<ApiExceptionResponse>
   >({
-    queryKey: ['oAuth', code, state],
-    queryFn: () => oAuthLogin(registrationId as string, code, state),
-    enabled: !!code && !!state,
+    queryKey: ['oAuth', code, csrfState],
+    queryFn: () => oAuthLogin(registrationId as string, code, csrfState),
+    enabled: !!code && !!csrfState,
     retry: false,
     refetchOnWindowFocus: false,
     refetchOnMount: false
@@ -77,7 +83,7 @@ export default function OauthLogin() {
     console.log('=====[useEffect]===== stateParams : ', stateParams);
     if (registrationId && codeParams && stateParams) {
       setCode(codeParams as string);
-      setState(stateParams as string);
+      setCsrfState(stateParams as string);
     } else {
       setOpenError(true);
     }
@@ -154,7 +160,10 @@ export default function OauthLogin() {
 
   /**-------------------------------- useQuery 결과처리 --------------------------------------*/
   if (isSuccess) {
+    // 로그인 처리
+    dispatch(loginReducer());
     if (data.data.isNewMember) {
+      // 회원가입의 경우 닉네임 지정 화면
       return (
         <NicknameForm
           form={form}

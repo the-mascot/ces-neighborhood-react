@@ -22,4 +22,9 @@ export interface OAuthLoginReq {
 export interface OAuthLoginRes {
   isNewMember: boolean;
   nickname: string;
+  profileImage: string;
+}
+
+export interface AuthReducerType {
+  isAuthenticated: boolean;
 }

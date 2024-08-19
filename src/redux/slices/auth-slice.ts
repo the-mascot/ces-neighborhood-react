@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { resetState } from 'jest-circus';
+import { RootState } from 'src/redux/store';
+import { AuthReducerType } from 'src/types/auth.type';
 
-const initialState = {
-  nickname: '',
-  profileImage: '',
+const initialState: AuthReducerType = {
   isAuthenticated: false
 };
 
@@ -11,13 +10,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginReducer: (state, action) => {
-      state.nickname = action.payload.nickname;
-      state.profileImage = action.payload.profileImage;
+    loginReducer: (state) => {
       state.isAuthenticated = true;
     },
     logoutReducer: (state) => {
-      (state.nickname = ''), (state.profileImage = ''), (state.isAuthenticated = false);
+      state.isAuthenticated = false;
     }
   }
 });
@@ -25,3 +22,5 @@ export const authSlice = createSlice({
 export const { loginReducer, logoutReducer } = authSlice.actions;
 
 export default authSlice.reducer;
+
+export const authInfo = (state: RootState) => state.authInfo;

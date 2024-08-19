@@ -24,8 +24,6 @@ import { Box, Button, Checkbox, FormControlLabel, InputLabel, Link, Stack, TextF
 import { alpha, styled } from '@mui/material/styles';
 import endpoints from 'src/apis/endpoints';
 import { useDispatch } from 'react-redux';
-import { loginReducer } from 'src/redux/slices/auth-slice';
-import { ApiResponse } from 'src/types/api.response';
 
 const GoogleLoginButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[900],
@@ -70,7 +68,6 @@ export default function Login() {
   const onSubmit = async (loginReq: LoginReq) => {
     mutation.mutate(loginReq, {
       onSuccess: (data) => {
-        dispatch(loginReducer({ nickname: data.data.nickname, profileImage: data.data.profileImage }));
         navigate('/', { replace: true });
       }
     });

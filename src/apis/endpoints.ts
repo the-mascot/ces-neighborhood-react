@@ -17,7 +17,8 @@ const endpoints = {
   member: {
     checkId: getPath('/member/check/id'), // ID 중복확인
     checkNickname: getPath('/member/check/nickname'), // nickname 중복확인
-    updateMemberInfo: getPath('/member/info') // 회원정보변경
+    updateMemberInfo: getPath('/member/info'), // 회원정보변경
+    profileInfo: getPath('/member/profile/info') // profile 정보 가져오기
   },
   board: {
     main: getPath('/board/main') // 게시판 메인

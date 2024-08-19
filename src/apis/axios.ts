@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { logoutReducer } from 'src/redux/slices/auth-slice';
 
 const ACCESS_TOKEN_HEADER_NAME = 'Access-token';
 const REFRESH_TOKEN_HEADER_NAME = 'Refresh-token';
@@ -29,8 +31,6 @@ axiosInstance.interceptors.response.use(
   (response: any) => {
     const accessToken = response.headers[ACCESS_TOKEN_HEADER_NAME.toLowerCase()];
     const refreshToken = response.headers[REFRESH_TOKEN_HEADER_NAME.toLowerCase()];
-    console.log('===== accessToken ===== : ', accessToken);
-    console.log('===== refreshToken ===== : ', refreshToken);
     // 토큰이 존재하면 세션 스토리지에 저장합니다.
     if (accessToken) {
       sessionStorage.setItem(ACCESS_TOKEN_HEADER_NAME, accessToken);

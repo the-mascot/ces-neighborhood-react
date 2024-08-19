@@ -502,9 +502,10 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
       MuiMenuItem: {
         styleOverrides: {
           root: ({ theme }) => ({
+            fontFamily: 'Pretendard',
+            fontSize: 15,
             borderRadius: '99px',
-            color: gray[500],
-            fontWeight: 500,
+            fontWeight: 600,
             ...(theme.palette.mode === 'dark' && {
               color: gray[300]
             })
@@ -514,10 +515,10 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
       MuiPaper: {
         styleOverrides: {
           root: ({ theme }) => ({
+            fontFamily: 'Pretendard',
             backgroundImage: 'none',
-            backgroundColor: gray[100],
             ...(theme.palette.mode === 'dark' && {
-              backgroundColor: alpha(gray[900], 0.6)
+              backgroundColor: alpha(gray[50], 0.6)
             })
           })
         }
