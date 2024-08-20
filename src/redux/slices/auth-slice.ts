@@ -1,8 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from 'src/redux/store';
-import { AuthReducerType } from 'src/types/auth.type';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: AuthReducerType = {
+type LoginInfo = {
+  nickname: string;
+  profileImage: string;
+  isAuthenticated: boolean;
+};
+
+const initialState: LoginInfo = {
+  nickname: '',
+  profileImage: '',
   isAuthenticated: false
 };
 
@@ -10,17 +16,19 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginReducer: (state) => {
+    login: (state, action: PayloadAction<{ nickname: string; profileImage: string }>) => {
+      state.nickname = action.payload.nickname;
+      state.profileImage = action.payload.profileImage;
       state.isAuthenticated = true;
     },
-    logoutReducer: (state) => {
+    logout: (state) => {
+      state.nickname = '';
+      state.profileImage = '';
       state.isAuthenticated = false;
     }
   }
 });
 
-export const { loginReducer, logoutReducer } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 
 export default authSlice.reducer;
-
-export const authInfo = (state: RootState) => state.authInfo;

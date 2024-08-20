@@ -1,22 +1,35 @@
-import * as React from 'react';
-import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, PaletteMode } from '@mui/material';
-import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import { ReactComponent as NeighborhoodLogo } from 'src/assets/images/neighborhood_logo.svg';
-import { useNavData } from 'src/layouts/config-navigation';
-import { useLocation, useNavigate } from 'react-router';
-import MenuIcon from '@mui/icons-material/Menu';
-import { styled } from '@mui/material/styles';
-import { paths } from 'src/routes/paths';
+// react
+import { useState } from 'react';
+// libraries
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router';
 import { RootState } from 'src/redux/store';
+// components
+import { NeighborhoodLogo } from 'src/components/icon/index';
+// @mui
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Divider,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  PaletteMode,
+  styled,
+  Toolbar
+} from '@mui/material';
 import { Logout, Settings } from '@mui/icons-material';
-import { useQuery } from '@tanstack/react-query';
-import { fetchProfileInfo } from 'src/apis/member';
-import { setProfileInfo } from 'src/redux/slices/member-slice';
+import MenuIcon from '@mui/icons-material/Menu';
+// data
+import { useNavData } from 'src/layouts/config-navigation';
+// paths
+import { paths } from 'src/routes/paths';
+import { logout } from 'src/redux/slices/auth-slice';
+import { removeToken } from 'src/utils/token-utils';
 
 interface Props {
   mode: PaletteMode;
@@ -27,6 +40,7 @@ type MenuButtonProps = {
   active: string | undefined;
 };
 
+/*GNB 메뉴 버튼 스타일*/
 const MenuButton = styled(Button)<MenuButtonProps>(({ theme, active }) => ({
   color: theme.palette.grey[800],
   fontSize: 21,
@@ -44,36 +58,37 @@ const MenuButton = styled(Button)<MenuButtonProps>(({ theme, active }) => ({
   })
 }));
 
-export default function Navigator({ mode, toggleColorMode }: Props) {
+export default function NavigationBar({ mode, toggleColorMode }: Props) {
+  // 메뉴 Data
   const navData = useNavData();
+  // navigate
   const navigate = useNavigate();
+  // location
   const location = useLocation();
-  const isAuthenticated = useSelector((state: RootState) => state.authInfo.isAuthenticated);
-  const { nickname, profileImage } = useSelector((state: RootState) => state.memberInfo);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  // redux
   const dispatch = useDispatch();
-  console.log('nickname: ', nickname);
-  console.log('profileImage: ', profileImage);
-  console.log('isAuthenticated: ', isAuthenticated);
+  const { nickname, profileImage, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  // states
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-  const { data, isLoading, isSuccess, isError } = useQuery({
-    queryKey: [isAuthenticated],
-    queryFn: fetchProfileInfo
-  });
-
-  /**-------------------------------- 이벤트 헨들러 --------------------------------------*/
+  /**-------------------------------- 이벤트헨들러 --------------------------------------*/
+  /*프로필 클릭이벤트*/
   const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
   };
 
+  /*프로필메뉴 닫기*/
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
   };
 
-  if (isSuccess) {
-    dispatch(setProfileInfo({ nickname: data.data.nickname, profileImage: data.data.profileImage }));
-  }
+  /*로그아웃 클릭이벤트*/
+  const handleLogoutClick = () => {
+    dispatch(logout());
+    removeToken();
+    window.location.href = `${window.location.origin}/`;
+  };
 
   return (
     <AppBar position="fixed" sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none' }}>
@@ -181,7 +196,7 @@ export default function Navigator({ mode, toggleColorMode }: Props) {
                 </ListItemIcon>
                 Settings
               </MenuItem>
-              <MenuItem onClick={handleProfileMenuClose}>
+              <MenuItem onClick={handleLogoutClick}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>

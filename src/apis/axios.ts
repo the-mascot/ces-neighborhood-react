@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { logoutReducer } from 'src/redux/slices/auth-slice';
-
-const ACCESS_TOKEN_HEADER_NAME = 'Access-token';
-const REFRESH_TOKEN_HEADER_NAME = 'Refresh-token';
+import { store } from 'src/redux/store';
+import { logout } from 'src/redux/slices/auth-slice';
+import { Constant } from 'src/constants/constant';
+import { removeToken, setToken } from 'src/utils/token-utils';
 
 // Axios 인스턴스를 생성합니다.
 const axiosInstance = axios.create({
@@ -13,14 +12,12 @@ const axiosInstance = axios.create({
 
 /**-------------------------------- 요청 인터셉터 --------------------------------------*/
 axiosInstance.interceptors.request.use((config) => {
-  const accessToken = sessionStorage.getItem(ACCESS_TOKEN_HEADER_NAME);
-  const refreshToken = sessionStorage.getItem(REFRESH_TOKEN_HEADER_NAME);
-  console.log('===== accessToken ===== : ', accessToken);
-  console.log('===== refreshToken ===== : ', refreshToken);
+  const accessToken = sessionStorage.getItem(Constant.ACCESS_TOKEN_HEADER_NAME);
+  const refreshToken = sessionStorage.getItem(Constant.REFRESH_TOKEN_HEADER_NAME);
 
   if (accessToken && refreshToken) {
-    config.headers.set(ACCESS_TOKEN_HEADER_NAME, accessToken);
-    config.headers.set(REFRESH_TOKEN_HEADER_NAME, refreshToken);
+    config.headers.set(Constant.ACCESS_TOKEN_HEADER_NAME, accessToken);
+    config.headers.set(Constant.REFRESH_TOKEN_HEADER_NAME, refreshToken);
   }
 
   return config;
@@ -29,15 +26,9 @@ axiosInstance.interceptors.request.use((config) => {
 /**-------------------------------- 응답 인터셉터 --------------------------------------*/
 axiosInstance.interceptors.response.use(
   (response: any) => {
-    const accessToken = response.headers[ACCESS_TOKEN_HEADER_NAME.toLowerCase()];
-    const refreshToken = response.headers[REFRESH_TOKEN_HEADER_NAME.toLowerCase()];
-    // 토큰이 존재하면 세션 스토리지에 저장합니다.
-    if (accessToken) {
-      sessionStorage.setItem(ACCESS_TOKEN_HEADER_NAME, accessToken);
-    }
-    if (refreshToken) {
-      sessionStorage.setItem(REFRESH_TOKEN_HEADER_NAME, refreshToken);
-    }
+    const accessToken = response.headers[Constant.ACCESS_TOKEN_HEADER_NAME.toLowerCase()];
+    const refreshToken = response.headers[Constant.REFRESH_TOKEN_HEADER_NAME.toLowerCase()];
+    setToken(accessToken, refreshToken);
 
     return response;
   },
@@ -46,7 +37,9 @@ axiosInstance.interceptors.response.use(
       switch (error.response.status) {
         case 401:
         case 403:
-          logoutAndRedirect();
+          store.dispatch(logout());
+          removeToken();
+          window.location.href = `${window.location.origin}/`;
           break;
         default:
           return Promise.reject(error);
@@ -56,13 +49,5 @@ axiosInstance.interceptors.response.use(
     }
   }
 );
-
-/**-------------------------------- funtion --------------------------------------*/
-/*storage session 에서 토큰 삭제 후 로그인 페이지 리다이렉트*/
-const logoutAndRedirect = () => {
-  sessionStorage.removeItem(ACCESS_TOKEN_HEADER_NAME);
-  sessionStorage.removeItem(REFRESH_TOKEN_HEADER_NAME);
-  //window.location.href = `${window.location.origin}/login`;
-};
 
 export default axiosInstance;

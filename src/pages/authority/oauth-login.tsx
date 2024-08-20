@@ -1,31 +1,35 @@
 // react
 import { useCallback, useEffect, useState } from 'react';
+// redux
+import { useDispatch } from 'react-redux';
+import { login } from 'src/redux/slices/auth-slice';
 // libraries
+import * as yup from 'yup';
+import { debounce } from 'lodash';
+import { AxiosError } from 'axios';
+import { useForm, UseFormReturn } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router';
 // apis
 import { oAuthLogin } from 'src/apis/auth';
+import { updateMemberInfo, checkNicknameDuplicate } from 'src/apis/member';
 // types
+import { OAuthLoginRes } from 'src/types/auth.type';
+import { UpdateMemberInfoReq } from 'src/types/member.type';
 import { ApiExceptionResponse, ApiResponse } from 'src/types/api.response';
 // components
 import OneButtonModal from 'src/components/one-button-modal';
 import ErrorModal from 'src/components/error-modal';
-import { AxiosError } from 'axios';
-import { Box, Button, InputLabel, List, ListItem, ListItemIcon, Stack, TextField, Typography } from '@mui/material';
-import { OAuthLoginRes } from 'src/types/auth.type';
 import { NeighborhoodLogo } from 'src/components/icon/index';
 import ButtonClearIcon from 'src/components/button-clear-icon';
-import { updateMemberInfo, checkNicknameDuplicate } from 'src/apis/member';
-import { useForm, UseFormReturn } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { debounce } from 'lodash';
 import ErrorCaption from 'src/components/error-caption';
 import SuccessCaption from 'src/components/success-caption';
-import { UpdateMemberInfoReq } from 'src/types/member.type';
-import { useDispatch } from 'react-redux';
-import { loginReducer } from 'src/redux/slices/auth-slice';
+
+// @mui
+import { Box, Button, InputLabel, List, ListItem, ListItemIcon, Stack, TextField, Typography } from '@mui/material';
+import LoadingSpinner from 'src/components/loading/loading-spinner';
 
 const schema = yup.object().shape({
   nickname: yup
@@ -45,10 +49,10 @@ export default function OauthLogin() {
   // redux
   const dispatch = useDispatch();
   // states
-  const [code, setCode] = useState<string>('');
-  const [csrfState, setCsrfState] = useState<string>('');
-  const [openError, setOpenError] = useState<boolean>(false);
-  const [disableNext, setDisableNext] = useState<boolean>(false);
+  const [code, setCode] = useState<string>(''); // authorization code
+  const [csrfState, setCsrfState] = useState<string>(''); // state
+  const [openError, setOpenError] = useState<boolean>(false); // error modal
+  const [disableNext, setDisableNext] = useState<boolean>(false); // 확인버튼 disable
   const [isDuplicateNickname, setIsDuplicateNickname] = useState<boolean | null>(null); // 닉네임 중복여부
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // 가입 진행 flag
 
@@ -91,6 +95,9 @@ export default function OauthLogin() {
 
   /*신규 회원이면 추천닉네임 form data에 set*/
   useEffect(() => {
+    if (isSuccess) {
+      dispatch(login({ nickname: data.data.nickname.toString(), profileImage: data.data.profileImage.toString() }));
+    }
     if (isSuccess && data.data.isNewMember) {
       form.setValue('nickname', data.data.nickname);
     }
@@ -127,6 +134,9 @@ export default function OauthLogin() {
     if (data && submitData.nickname !== data.data.nickname) {
       mutation.mutate(submitData, {
         onSuccess: () => {
+          dispatch(
+            login({ nickname: submitData.nickname.toString(), profileImage: data.data.profileImage.toString() })
+          );
           navigate('/');
         }
       });
@@ -160,8 +170,6 @@ export default function OauthLogin() {
 
   /**-------------------------------- useQuery 결과처리 --------------------------------------*/
   if (isSuccess) {
-    // 로그인 처리
-    dispatch(loginReducer());
     if (data.data.isNewMember) {
       // 회원가입의 경우 닉네임 지정 화면
       return (
@@ -176,6 +184,10 @@ export default function OauthLogin() {
     } else {
       navigate('/', { replace: true });
     }
+  }
+
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
   if (isError) {

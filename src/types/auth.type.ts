@@ -24,7 +24,3 @@ export interface OAuthLoginRes {
   nickname: string;
   profileImage: string;
 }
-
-export interface AuthReducerType {
-  isAuthenticated: boolean;
-}

@@ -4,7 +4,7 @@ import { useState } from 'react';
 // libraries
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 // apis
@@ -24,6 +24,8 @@ import { Box, Button, Checkbox, FormControlLabel, InputLabel, Link, Stack, TextF
 import { alpha, styled } from '@mui/material/styles';
 import endpoints from 'src/apis/endpoints';
 import { useDispatch } from 'react-redux';
+import BackButton from 'src/components/back-button';
+import { login as loginReducer } from 'src/redux/slices/auth-slice';
 
 const GoogleLoginButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[900],
@@ -50,7 +52,8 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   // redux
   const dispatch = useDispatch();
-  // useForm
+
+  /**-------------------------------- useForm --------------------------------------*/
   const {
     register,
     handleSubmit,
@@ -59,6 +62,7 @@ export default function Login() {
   } = useForm<LoginReq>({
     resolver: yupResolver(schema)
   });
+
   /**-------------------------------- useMutation --------------------------------------*/
   const mutation = useMutation({
     mutationFn: login
@@ -68,6 +72,9 @@ export default function Login() {
   const onSubmit = async (loginReq: LoginReq) => {
     mutation.mutate(loginReq, {
       onSuccess: (data) => {
+        dispatch(
+          loginReducer({ nickname: data.data.nickname.toString(), profileImage: data.data.profileImage.toString() })
+        );
         navigate('/', { replace: true });
       }
     });
@@ -79,7 +86,6 @@ export default function Login() {
     const redirectURI = encodeURIComponent(process.env.REACT_APP_OAUTH_NAVER_REDIRECT_URL as string);
     const clientId = process.env.REACT_APP_OAUTH_NAVER_CLIENT_ID;
     const url = `${endpoints.oAuth.naver}?client_id=${clientId}&response_type=code&redirect_uri=${redirectURI}&state=${generateState()}`;
-    console.log('url : ', url);
     window.location.href = url;
   };
 
@@ -89,7 +95,6 @@ export default function Login() {
     const scope = encodeURIComponent(process.env.REACT_APP_OAUTH_GOOGLE_SCOPE as string);
     const clientId = process.env.REACT_APP_OAUTH_GOOGLE_CLIENT_ID;
     const url = `${endpoints.oAuth.google}?client_id=${clientId}&response_type=code&redirect_uri=${redirectURI}&state=${generateState()}&scope=${scope}`;
-    console.log('url : ', url);
     window.location.href = url;
   };
 
@@ -105,11 +110,14 @@ export default function Login() {
 
   return (
     <Stack justifyContent="center" alignItems="center">
+      <Stack alignItems="end" justifyContent="end" sx={{ width: '100%', marginBottom: 1 }} onClick={() => navigate(-1)}>
+        <BackButton />
+      </Stack>
       <NeighborhoodLogo width="180" height="92" />
       <Typography variant="h3" sx={{ mt: 2 }}>
         로그인
       </Typography>
-      <Box width="100%" component="form" onSubmit={handleSubmit(onSubmit)} mt={5}>
+      <Box width="100%" component="form" onSubmit={handleSubmit(onSubmit)} mt={4}>
         <Box>
           <InputLabel htmlFor="email">이메일</InputLabel>
           <TextField

@@ -11,7 +11,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function CompactLayout({ children }: Props) {
+export default function EmptyLayout({ children }: Props) {
   return (
     <>
       <Container component="main" maxWidth="xs">
@@ -27,7 +27,6 @@ export default function CompactLayout({ children }: Props) {
         >
           {children}
         </Stack>
-        <Copyright sx={{ mt: 5, mb: 5 }} />
       </Container>
     </>
   );

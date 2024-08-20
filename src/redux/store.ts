@@ -1,14 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from 'src/redux/slices/auth-slice';
-import memberReducer from 'src/redux/slices/member-slice';
+import { persistStore } from 'redux-persist';
+import persistedReducer from 'src/redux/persisted-reducer';
 
-export const store = configureStore({
-  reducer: {
-    authInfo: authReducer,
-    memberInfo: memberReducer
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'] // redux-persist 관련 액션 무시
+      }
+    });
   }
 });
 
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };
 
 export type RootState = ReturnType<typeof store.getState>;

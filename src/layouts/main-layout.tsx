@@ -1,9 +1,9 @@
-import { Container, Grid } from '@mui/material';
 import Main from './common/main';
-import Navigator from 'src/layouts/navigator';
+import NavigationBar from 'src/layouts/common/navigation-bar';
 import * as React from 'react';
 import { useContext } from 'react';
 import { SettingContext } from 'src/context/setting-context';
+import Copyright from 'src/components/copyright';
 
 type Props = {
   children: React.ReactNode;
@@ -14,9 +14,11 @@ export default function MainLayout({ children }: Props) {
 
   return (
     <>
-      <Navigator mode={themeMode} toggleColorMode={toggleColorMode} />
+      <NavigationBar mode={themeMode} toggleColorMode={toggleColorMode} />
 
       <Main>{children}</Main>
+
+      <Copyright sx={{ mt: 5, mb: 5 }} />
     </>
   );
 }

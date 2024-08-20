@@ -11,6 +11,7 @@ import CompactLayout from 'src/layouts/compact-layout';
 // index
 import Home from 'src/pages/home';
 import OauthLogin from 'src/pages/authority/oauth-login';
+import EmptyLayout from 'src/layouts/empty-layout';
 // authority
 const Login = lazy(() => import('src/pages/authority/login'));
 const Join = lazy(() => import('src/pages/authority/join'));
@@ -44,12 +45,19 @@ export default function Router() {
       children: [
         { path: paths.auth.login, element: <Login /> },
         { path: paths.auth.join, element: <Join /> },
-        { path: paths.auth.oauth, element: <OauthLogin /> },
         { path: paths.error.p403, element: <Page403 /> },
         { path: paths.error.p404, element: <Page404 /> },
         { path: paths.error.p500, element: <Page500 /> },
         { path: '*', element: <Page404 /> }
       ]
+    },
+    {
+      element: (
+        <EmptyLayout>
+          <Outlet />
+        </EmptyLayout>
+      ),
+      children: [{ path: paths.auth.oauth, element: <OauthLogin /> }]
     }
   ]);
 }
