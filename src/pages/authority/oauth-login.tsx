@@ -14,7 +14,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router';
 // apis
 import { oAuthLogin } from 'src/apis/auth';
-import { updateMemberInfo, checkNicknameDuplicate } from 'src/apis/member';
+import { checkNicknameDuplicate, updateMemberInfo } from 'src/apis/member';
 // types
 import { OAuthLoginRes } from 'src/types/auth.type';
 import { UpdateMemberInfoReq } from 'src/types/member.type';
@@ -28,7 +28,7 @@ import ErrorCaption from 'src/components/error-caption';
 import SuccessCaption from 'src/components/success-caption';
 
 // @mui
-import { Box, Button, InputLabel, List, ListItem, ListItemIcon, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, InputLabel, Stack, TextField, Typography } from '@mui/material';
 import LoadingSpinner from 'src/components/loading/loading-spinner';
 
 const schema = yup.object().shape({
@@ -91,15 +91,15 @@ export default function OauthLogin() {
     } else {
       setOpenError(true);
     }
-  }, [searchParams, codeParams, registrationId]);
+  }, [searchParams, codeParams, registrationId, stateParams]);
 
   /*신규 회원이면 추천닉네임 form data에 set*/
   useEffect(() => {
-    if (isSuccess) {
-      dispatch(login({ nickname: data.data.nickname.toString(), profileImage: data.data.profileImage.toString() }));
-    }
     if (isSuccess && data.data.isNewMember) {
       form.setValue('nickname', data.data.nickname);
+    } else if (isSuccess) {
+      dispatch(login({ nickname: data.data.nickname.toString(), profileImage: data.data.profileImage.toString() }));
+      navigate('/', { replace: true });
     }
   }, [isSuccess]);
 
@@ -131,6 +131,7 @@ export default function OauthLogin() {
   /**-------------------------------- onSubmit --------------------------------------*/
   /*닉네임 변경*/
   const onSubmit = async (submitData: UpdateMemberInfoReq) => {
+    setIsSubmitting(true);
     if (data && submitData.nickname !== data.data.nickname) {
       mutation.mutate(submitData, {
         onSuccess: () => {
@@ -138,6 +139,10 @@ export default function OauthLogin() {
             login({ nickname: submitData.nickname.toString(), profileImage: data.data.profileImage.toString() })
           );
           navigate('/');
+        },
+        onError: () => {
+          setOpenError(true);
+          setIsSubmitting(false);
         }
       });
     } else {
@@ -181,8 +186,6 @@ export default function OauthLogin() {
           recommendNickname={data.data.nickname}
         />
       );
-    } else {
-      navigate('/', { replace: true });
     }
   }
 

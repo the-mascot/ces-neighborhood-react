@@ -13,7 +13,7 @@ type Props = {
 
 export default function CompactLayout({ children }: Props) {
   return (
-    <>
+    <Container component="body">
       <Container component="main" maxWidth="xs">
         <Stack
           sx={{
@@ -29,6 +29,6 @@ export default function CompactLayout({ children }: Props) {
         </Stack>
         <Copyright sx={{ mt: 5, mb: 5 }} />
       </Container>
-    </>
+    </Container>
   );
 }

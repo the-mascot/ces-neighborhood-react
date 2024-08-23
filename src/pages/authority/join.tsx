@@ -379,6 +379,7 @@ export default function Join() {
                 endAdornment: <ButtonClearIcon onClick={() => resetField('userId')} />
               }}
             />
+            {/**ID 필드 상태메세지*/}
             <IdStatusMessage />
             <Button
               fullWidth

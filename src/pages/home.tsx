@@ -7,12 +7,13 @@ import Pricing from 'src/components/Pricing';
 import Features from 'src/components/Features';
 import Testimonials from 'src/components/Testimonials';
 import FAQ from 'src/components/FAQ';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 export default function Home() {
   return (
     <>
       <Box sx={{ bgcolor: 'background.default' }}>
+        <Button variant="contained">ddd</Button>
         <Typography variant="h1">세상에 이런 폰트가 나오다니 천재인듯</Typography>
         <Typography variant="h2">안녕하세요 h2 입니다.</Typography>
         <Typography variant="h3">안녕하세요 h3 입니다.</Typography>

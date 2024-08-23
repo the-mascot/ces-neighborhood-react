@@ -6,19 +6,21 @@ import { UpdateMemberInfoReq } from 'src/types/member.type';
 import { LoginRes } from 'src/types/auth.type';
 
 /*ID 중복체크*/
-export const checkIdDuplicate = async (userId: string): Promise<ApiResponse<boolean>> => {
+export const checkIdDuplicate = async (userId: string) => {
   const encodedURL = encodeURIComponent(userId);
 
-  return await axiosInstance.get(`${endpoints.member.checkId}/${encodedURL}`).then((response: any) => response.data);
+  return await axiosInstance
+    .get(`${endpoints.member.checkId}/${encodedURL}`)
+    .then((response: AxiosResponse<ApiResponse<boolean>>) => response.data);
 };
 
 /*닉네임 중복체크*/
-export const checkNicknameDuplicate = async (nickname: string): Promise<ApiResponse<boolean>> => {
+export const checkNicknameDuplicate = async (nickname: string) => {
   const encodedURL = encodeURIComponent(nickname);
 
   return await axiosInstance
     .get(`${endpoints.member.checkNickname}/${encodedURL}`)
-    .then((response: any) => response.data);
+    .then((response: AxiosResponse<ApiResponse<boolean>>) => response.data);
 };
 
 /*회원정보변경*/

@@ -25,7 +25,6 @@ const Page500 = lazy(() => import('src/pages/500'));
 export default function Router() {
   return useRoutes([
     {
-      path: '/',
       element: (
         <MainLayout>
           <Outlet />

@@ -91,7 +91,7 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
   };
 
   return (
-    <AppBar position="fixed" sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none' }}>
+    <AppBar position="fixed" sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none', maxHeight: 80 }}>
       <Container maxWidth="lg">
         <Toolbar
           variant="regular"
@@ -99,7 +99,6 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            flexShrink: 0,
             backdropFilter: 'blur(24px)',
             maxHeight: 80,
             bgcolor: 'hsla(220, 60%, 99%, 0.6)',
@@ -110,7 +109,7 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
         >
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <NeighborhoodLogo width="140" />
+              <NeighborhoodLogo width="140" height="72" />
             </Box>
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton>
@@ -142,67 +141,69 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
               </Button>
             )}
             {isAuthenticated && (
-              <IconButton
-                onClick={(e) => handleProfileClick(e)}
-                aria-controls={open ? 'profileMenu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-              >
-                <Avatar alt={nickname} src={profileImage} />
-              </IconButton>
+              <>
+                <IconButton
+                  onClick={(e) => handleProfileClick(e)}
+                  aria-controls={open ? 'profileMenu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                >
+                  <Avatar alt={nickname} src={profileImage} />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  id="profileMenu"
+                  open={open}
+                  onClose={handleProfileMenuClose}
+                  onClick={handleProfileMenuClose}
+                  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                  anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      overflow: 'visible',
+                      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                      mt: 1.5,
+                      '& .MuiAvatar-root': {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1
+                      },
+                      '&::before': {
+                        content: '""',
+                        display: 'block',
+                        position: 'absolute',
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: 'background.paper',
+                        transform: 'translateY(-50%) rotate(45deg)',
+                        zIndex: 0
+                      }
+                    }
+                  }}
+                >
+                  <MenuItem onClick={handleProfileMenuClose}>
+                    <Avatar /> 내 정보보기
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={handleProfileMenuClose}>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    Settings
+                  </MenuItem>
+                  <MenuItem onClick={handleLogoutClick}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    로그아웃
+                  </MenuItem>
+                </Menu>
+              </>
             )}
-            <Menu
-              anchorEl={anchorEl}
-              id="profileMenu"
-              open={open}
-              onClose={handleProfileMenuClose}
-              onClick={handleProfileMenuClose}
-              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                  mt: 1.5,
-                  '& .MuiAvatar-root': {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1
-                  },
-                  '&::before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0
-                  }
-                }
-              }}
-            >
-              <MenuItem onClick={handleProfileMenuClose}>
-                <Avatar /> 내 정보보기
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={handleProfileMenuClose}>
-                <ListItemIcon>
-                  <Settings fontSize="small" />
-                </ListItemIcon>
-                Settings
-              </MenuItem>
-              <MenuItem onClick={handleLogoutClick}>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                로그아웃
-              </MenuItem>
-            </Menu>
           </Box>
         </Toolbar>
       </Container>

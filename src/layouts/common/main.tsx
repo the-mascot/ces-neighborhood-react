@@ -7,6 +7,7 @@ type Props = {
 export default function Main({ children }: Props) {
   return (
     <Container
+      component="main"
       maxWidth="lg"
       sx={{
         display: 'flex',
