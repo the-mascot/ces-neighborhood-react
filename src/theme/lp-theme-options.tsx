@@ -390,20 +390,12 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
         styleOverrides: {
           root: ({ theme, ownerState }) => ({
             backgroundColor: gray[50],
-            borderRadius: 10,
             border: `1px solid ${alpha(gray[200], 0.8)}`,
             boxShadow: 'none',
             transition: 'background-color, border, 80ms ease',
-            ...(ownerState.variant === 'outlined' && {
-              background: `linear-gradient(to bottom, #FFF, ${gray[50]})`,
-              '&:hover': {
-                borderColor: brand[300],
-                boxShadow: `0 0 24px ${brand[100]}`
-              }
-            }),
+            ...(ownerState.variant === 'outlined' && {}),
             ...(theme.palette.mode === 'dark' && {
               backgroundColor: alpha(gray[800], 0.6),
-              border: `1px solid ${alpha(gray[700], 0.3)}`,
               ...(ownerState.variant === 'outlined' && {
                 background: `linear-gradient(to bottom, ${gray[900]}, ${alpha(gray[800], 0.5)})`,
                 '&:hover': {
@@ -474,10 +466,14 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
         },
         styleOverrides: {
           root: ({ theme }) => ({
-            color: brand[600],
-            fontWeight: 500,
+            color: gray[900],
+            fontFamily: 'inherit',
+            fontWeight: 'inherit',
             position: 'relative',
             textDecoration: 'none',
+            '&:hover': {
+              color: gray[700]
+            },
             '&::before': {
               content: '""',
               position: 'absolute',
