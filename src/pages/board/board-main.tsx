@@ -1,6 +1,6 @@
-import { Box, Button, Card, CardHeader, Grid, Link, Stack } from '@mui/material';
+import { Box, Button, Card, CardHeader, Link, Stack } from '@mui/material';
+
 import { useQuery } from '@tanstack/react-query';
-import { Post } from 'src/types/board.type';
 import { fetchPosts } from 'src/apis/posts';
 import LoadingSpinner from 'src/components/loading/loading-spinner';
 import ErrorModal from 'src/components/error-modal';
@@ -9,7 +9,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
 import { RouterLink } from 'src/routes/components';
-
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import Grid from '@mui/material/Grid2';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 const PostCardLeft = styled(Card)(({ theme }) => ({
   variant: 'outlined',
   minHeight: '210px',
@@ -25,13 +29,22 @@ const PostCardRight = styled(Card)(({ theme }) => ({
   borderLeft: 0
 }));
 
+const PostBody = styled(Typography)(({ theme }) => ({
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  WebkitLineClamp: 3, // 표시할 줄 수를 설정합니다. 여기서는 2줄로 설정
+  lineHeight: '1.5', // 줄 간격을 설정 (옵션)
+  maxHeight: '4.5em' // 최대 높이를 줄 수에 맞게 설정
+}));
+
 export default function BoardMain() {
   const [enable, setEnable] = useState<boolean>(false);
   /**-------------------------------- useQuery --------------------------------------*/
-  const { data, isSuccess, isLoading, isError } = useQuery<Post[]>({
+  const { data, isSuccess, isLoading, isError } = useQuery({
     queryKey: ['posts', enable],
-    queryFn: fetchPosts,
-    enabled: enable
+    queryFn: fetchPosts
   });
 
   if (isSuccess) {
@@ -46,56 +59,72 @@ export default function BoardMain() {
     return <ErrorModal />;
   }
 
+  const getPosts = () => {
+    if (data && data.data) {
+      const pairedPosts = [];
+      for (let i = 0; i < data.data.length; i += 2) {
+        pairedPosts.push(
+          <Grid key={i} container justifyContent="start" alignItems="center">
+            <Grid size={{ xs: 11, lg: 5 }}>
+              <PostCardLeft>
+                <CardContent>
+                  <Typography
+                    variant="subtitle1"
+                    noWrap
+                    sx={{
+                      maxWidth: '100%',
+                      marginBottom: 5
+                    }}
+                  >
+                    <Link component={RouterLink} href={`/post/${encodeURIComponent(data.data[i].postNo)}`}>
+                      {data.data[i].title}
+                    </Link>
+                  </Typography>
+                  <Grid container justifyContent="start" alignItems="center" mb={4}>
+                    <Grid size={data.data[i].fileUrl ? 7 : 12}>
+                      <PostBody variant="body2">
+                        <Link component={RouterLink} href="/post/id">
+                          {data.data[i].content}
+                        </Link>
+                      </PostBody>
+                    </Grid>
+                  </Grid>
+                  <Grid container justifyContent="space-between" alignItems="center">
+                    <Grid container size={6} spacing={2}>
+                      <Stack direction="row" spacing={1}>
+                        <VisibilityOutlinedIcon color="action" height={8} width={8} sx={{ mt: '1px' }} />
+                        <Typography variant="caption">{data.data[i].viewCnt}</Typography>
+                      </Stack>
+                      <Stack direction="row" spacing={1}>
+                        <ChatOutlinedIcon color="action" height={8} width={8} sx={{ mt: '1px' }} />
+                        <Typography variant="caption">{data.data[i].commentCnt}</Typography>
+                      </Stack>
+                      <Box>
+                        {data.data[i].isLiked ? (
+                          <FavoriteIcon color="error" height={8} width={8} sx={{ mt: '1px' }} />
+                        ) : (
+                          <FavoriteBorderOutlinedIcon color="action" height={8} width={8} sx={{ mt: '1px' }} />
+                        )}
+                      </Box>
+                    </Grid>
+                    <Grid container size={6} justifyContent="end" alignItems="center">
+                      <Typography>{data.data[i].createElapsedTime}</Typography>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </PostCardLeft>
+            </Grid>
+          </Grid>
+        );
+      }
+
+      return pairedPosts;
+    }
+  };
+
   return (
     <Stack justifyContent="center" alignItems="center" sx={{ width: '100%' }}>
-      <Grid container justifyContent="center" alignItems="center">
-        <Grid item xs={11} lg={5}>
-          <PostCardLeft>
-            <CardContent>
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  maxWidth: '100%',
-                  marginBottom: 5
-                }}
-                noWrap
-              >
-                <Link component={RouterLink} href="/post/id">
-                  heeloddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                </Link>
-              </Typography>
-              <Box
-                sx={{
-                  paddingInline: '20px',
-                  boxSizing: 'inherit',
-                  height: '88px',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  maxWidth: '100%',
-                  display: '-webkit-box',
-                  webkitBoxOrient: 'vertical',
-                  webkitLineClamp: 3,
-                  lineClamp: 3,
-                  marginBottom: 5
-                }}
-              >
-                <Typography variant="body2">
-                  이끼마쇼fffffffffffffffffffffffffffffffffff이끼마쇼fffffffffffffffffffffffffffffffffff
-                  이끼마쇼fffffffffffffffffffffffffffffffffff이끼마쇼fffffffffffffffffffffffffffffffffff
-                  이끼마쇼fffffffffffffffffffffffffffffffffff이끼마쇼fffffffffffffffffffffffffffffffffff
-                </Typography>
-              </Box>
-            </CardContent>
-          </PostCardLeft>
-        </Grid>
-        <Grid item xs={11} lg={5}>
-          <PostCardRight>
-            <CardContent>
-              <Typography>heelod</Typography>
-            </CardContent>
-          </PostCardRight>
-        </Grid>
-      </Grid>
+      {getPosts()}
       <Button
         type="button"
         onClick={() => {

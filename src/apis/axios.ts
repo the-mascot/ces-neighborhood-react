@@ -39,7 +39,7 @@ axiosInstance.interceptors.response.use(
         case 403:
           store.dispatch(logout());
           removeToken();
-          window.location.href = `${window.location.origin}/`;
+          window.location.href = `${window.location.origin}/login`;
           break;
         default:
           return Promise.reject(error);

@@ -23,7 +23,7 @@ function SeverErrorIllustration({ ...other }: BoxProps) {
       height="100%"
       viewBox="0 0 480 360"
       xmlns="https://www.w3.org/2000/svg"
-      {...other}
+      sx={{ height: 260, my: { xs: 5, sm: 10 } }}
     >
       <BackgroundShape />
 

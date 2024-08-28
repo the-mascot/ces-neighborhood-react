@@ -1,6 +1,19 @@
+export interface Posts {
+  postNo: number;
+  nickname: string;
+  title: string;
+  content: string;
+  viewCnt: number;
+  likeCnt: number;
+  isLiked: boolean;
+  commentCnt: number;
+  createDate: string;
+  createElapsedTime: string;
+  fileUrl: string;
+}
+
 export interface Post {
   postNo: number;
-  boardType: string;
   title: string;
   content: string;
   delYn: string;

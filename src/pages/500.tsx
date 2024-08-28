@@ -30,7 +30,7 @@ export default function Page500() {
       </m.div>
 
       <m.div variants={varBounce().in}>
-        <SeverErrorIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
+        <SeverErrorIllustration />
       </m.div>
 
       <Button onClick={handleGoHomeClick} size="large" variant="contained">
