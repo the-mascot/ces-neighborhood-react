@@ -21,7 +21,8 @@ const endpoints = {
     profileInfo: getPath('/member/profile/info') // profile 정보 가져오기
   },
   board: {
-    main: getPath('/board/list') // 게시판 메인
+    posts: getPath('/board/posts'), // 게시글 목록
+    like: getPath('/board/post/like') // 게시글 좋아요
   }
 };
 

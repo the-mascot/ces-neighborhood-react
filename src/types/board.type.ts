@@ -20,3 +20,10 @@ export interface Post {
   viewCnt: number;
   createDateStr: string;
 }
+
+export type PostType = 'POST' | 'COMMENT' | 'REPLY';
+
+export interface PostLikeReq {
+  postNo: number;
+  postType: PostType;
+}
