@@ -10,13 +10,14 @@ import CompactLayout from 'src/layouts/compact-layout';
 // pages
 // index
 import Home from 'src/pages/home';
+import Login from 'src/pages/authority/login';
 import OauthLogin from 'src/pages/authority/oauth-login';
 import EmptyLayout from 'src/layouts/empty-layout';
 // authority
-const Login = lazy(() => import('src/pages/authority/login'));
 const Join = lazy(() => import('src/pages/authority/join'));
 // board
-const BoardMain = lazy(() => import('src/pages/board/board-main'));
+const PostList = lazy(() => import('src/pages/board/post-list'));
+const PostDetail = lazy(() => import('src/pages/board/post-detail'));
 
 // error pages
 const Page403 = lazy(() => import('src/pages/403'));
@@ -32,7 +33,8 @@ export default function Router() {
       ),
       children: [
         { path: paths.home, element: <Home /> },
-        { path: paths.board.main, element: <BoardMain /> }
+        { path: paths.board.posts, element: <PostList /> },
+        { path: paths.board.post, element: <PostDetail /> }
       ]
     },
     {

@@ -6,12 +6,12 @@ export const paths = {
     oauth: '/login/:registrationId'
   },
   board: {
-    main: '/board/main',
-    post: '/post/:postId'
+    posts: '/board/posts',
+    post: '/board/post/:postNo'
   },
   error: {
-    p403: '403',
-    p404: '404',
-    p500: '500'
+    p403: '/403',
+    p404: '/404',
+    p500: '/500'
   }
 };

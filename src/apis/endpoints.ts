@@ -22,7 +22,8 @@ const endpoints = {
   },
   board: {
     posts: getPath('/board/posts'), // 게시글 목록
-    like: getPath('/board/post/like') // 게시글 좋아요
+    like: getPath('/board/post/like'), // 게시글 좋아요
+    post: getPath('/board/post') // 게시글 상세
   }
 };
 

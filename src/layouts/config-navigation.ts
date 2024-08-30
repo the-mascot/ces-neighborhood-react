@@ -10,7 +10,7 @@ export function useNavData() {
       },
       {
         title: '게시판',
-        path: paths.board.main
+        path: paths.board.posts
       }
     ],
     []

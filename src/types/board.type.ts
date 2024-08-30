@@ -10,6 +10,7 @@ export interface Posts {
   createDate: string;
   createElapsedTime: string;
   fileUrl: string;
+  fileName: string;
 }
 
 export interface Post {
@@ -18,7 +19,16 @@ export interface Post {
   content: string;
   delYn: string;
   viewCnt: number;
-  createDateStr: string;
+  isLiked: boolean;
+  commentCnt: number;
+  createDate: string;
+  createElapsedTime: string;
+  fileUrl: Attachment[];
+}
+
+export interface Attachment {
+  fileUrl: string;
+  fileName: string;
 }
 
 export type PostType = 'POST' | 'COMMENT' | 'REPLY';
