@@ -1,6 +1,6 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const getPath = (path: string) => {
+const getPath = (path: string): string => {
   return `${API_BASE_URL}${path}`;
 };
 

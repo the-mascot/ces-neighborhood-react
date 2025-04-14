@@ -1,12 +1,12 @@
-import { Box, Link, Typography } from '@mui/material';
-import * as React from 'react';
+import { Box, Link, SxProps, Typography } from '@mui/material';
+
 import { paths } from 'src/routes/paths';
 import RouterLink from 'src/routes/components/router-link';
 
-export default function Copyright(props: any) {
+export default function Copyright(props: SxProps): JSX.Element {
   return (
     <Box>
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      <Typography variant="body2" color={'text.sen'} align="center" sx={{ ...props }}>
         {'Copyright © '}
         <Link component={RouterLink} href={paths.home} color="inherit">
           이웃사람들

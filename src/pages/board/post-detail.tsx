@@ -8,23 +8,24 @@ import LoadingSpinner from 'src/components/loading/loading-spinner';
 import ErrorModal from 'src/components/error-modal';
 
 export default function PostDetail() {
-  const { postNoParams } = useParams();
+  const { postNo } = useParams();
   const navigate = useNavigate();
-  const [postNo, setPostNo] = useState<number | null>(null);
+  const [postNoState, setPostNoState] = useState<number | null>(null);
 
   useEffect(() => {
-    console.log('postNo is Not a Number : ', isNaN(Number(postNoParams)));
-    if (postNoParams && isNaN(Number(postNo))) {
-      setPostNo(Number(postNoParams));
+    console.log('=====[useEffect]===== postNo : ', postNo);
+    if (postNo && !isNaN(Number(postNo))) {
+      setPostNoState(Number(postNo));
     } else {
       navigate('/404');
     }
-  }, []);
+  }, [postNo]);
 
   /**-------------------------------- useQuery --------------------------------------*/
   const { data, isLoading, isError } = useQuery({
-    queryKey: [postNo],
-    queryFn: () => fetchPost(postNo as number)
+    queryKey: [postNoState],
+    queryFn: () => fetchPost(postNoState as number),
+    enabled: !!postNoState
   });
 
   /**-------------------------------- useQuery 결과처리 --------------------------------------*/

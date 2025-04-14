@@ -26,13 +26,14 @@ const Page500 = lazy(() => import('src/pages/500'));
 export default function Router() {
   return useRoutes([
     {
+      path: paths.home,
       element: (
         <MainLayout>
           <Outlet />
         </MainLayout>
       ),
       children: [
-        { path: paths.home, element: <Home /> },
+        { element: <Home />, index: true },
         { path: paths.board.posts, element: <PostList /> },
         { path: paths.board.post, element: <PostDetail /> }
       ]

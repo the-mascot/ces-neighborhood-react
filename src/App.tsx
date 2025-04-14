@@ -4,11 +4,11 @@ import ThemeProvider from 'src/theme/theme-provider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import SplashScreen from 'src/components/loading/splash-screen';
-import { Suspense } from 'react';
+import { JSX, Suspense } from 'react';
 import 'src/fonts/index.css';
 import ReduxProvider from 'src/redux/redux-provider';
 
-function App() {
+function App(): JSX.Element {
   const queryClient = new QueryClient();
 
   return (

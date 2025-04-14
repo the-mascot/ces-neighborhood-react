@@ -5,7 +5,7 @@ type Props = {
   onClick: () => void;
 };
 
-export default function ButtonClearIcon({ onClick }: Props) {
+export default function ButtonClearIcon({ onClick }: Props): JSX.Element {
   return (
     <InputAdornment position="end" sx={{ pr: 1 }}>
       <IconButton aria-label="초기화" edge="end" onClick={onClick}>

@@ -1,26 +1,35 @@
-import axiosInstance from 'src/apis/axios';
 import endpoints from 'src/apis/endpoints';
-import { JoinReq, LoginReq, LoginRes, OAuthLoginReq, OAuthLoginRes } from 'src/types/auth.type';
-import { AxiosResponse } from 'axios';
+import { JoinReq, LoginReq, LoginRes, OAuthLoginRes } from 'src/types/auth.type';
 import { ApiResponse } from 'src/types/api.response';
 
+import createAxiosInstance from './axios';
+
+const axiosInstance = createAxiosInstance({
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  timeout: 6000
+});
+
 /*로그인*/
-export const login = async (data: LoginReq) => {
-  return await axiosInstance
-    .post(endpoints.auth.login, data)
-    .then((response: AxiosResponse<ApiResponse<LoginRes>>) => response.data);
+export const login = async (data: LoginReq): Promise<ApiResponse<LoginRes>> => {
+  return await axiosInstance.post(endpoints.auth.login, data).then((response) => response.data);
 };
 
 /*회원가입*/
-export const join = async (data: JoinReq) => {
-  return await axiosInstance
-    .post(endpoints.auth.join, data)
-    .then((response: AxiosResponse<ApiResponse<null>>) => response.data);
+export const join = async (data: JoinReq): Promise<ApiResponse<null>> => {
+  return await axiosInstance.post(endpoints.auth.join, data).then((response) => response.data);
 };
 
 /*oAuth 로그인*/
-export const oAuthLogin = async (registrationId: string, code: string, state: string) => {
+export const oAuthLogin = async (
+  registrationId: string,
+  code: string,
+  state: string
+): Promise<ApiResponse<OAuthLoginRes>> => {
+  const encRegistrationId = encodeURIComponent(registrationId);
+  const params = new URLSearchParams({ code, state });
   return await axiosInstance
-    .get(`${endpoints.auth.oauth}/${registrationId}?code=${code}&state=${state}`)
-    .then((response: AxiosResponse<ApiResponse<OAuthLoginRes>>) => response.data);
+    .get(`${endpoints.auth.oauth}/${encRegistrationId}?${params.toString()}`)
+    .then((response) => response.data);
 };

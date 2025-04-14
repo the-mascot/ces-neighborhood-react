@@ -1,15 +1,15 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import { Button, Typography } from '@mui/material';
+
 import LogoCollection from 'src/components/LogoCollection';
 import Highlights from 'src/components/Highlights';
 import Pricing from 'src/components/Pricing';
 import Features from 'src/components/Features';
-import Testimonials from 'src/components/Testimonials';
 import FAQ from 'src/components/FAQ';
-import { Button, Typography } from '@mui/material';
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <>
       <Box sx={{ bgcolor: 'background.default' }}>
@@ -29,7 +29,6 @@ export default function Home() {
         <LogoCollection />
         <Features />
         <Divider />
-        <Testimonials />
         <Divider />
         <Highlights />
         <Divider />

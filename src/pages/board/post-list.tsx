@@ -2,7 +2,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 // libraries
 import { useMutation, useQuery } from '@tanstack/react-query';
+
 // apis
+import Grid from '@mui/material/Grid';
+import { Stack } from '@mui/material';
+
 import { fetchPosts, updatePostLike } from 'src/apis/board';
 // types
 import { Posts } from 'src/types/board.type';
@@ -10,16 +14,15 @@ import { Posts } from 'src/types/board.type';
 import ErrorModal from 'src/components/error-modal';
 import LoadingSpinner from 'src/components/loading/loading-spinner';
 import PostCardComponent from 'src/components/board/PostCardComponent';
+import { ApiResponse } from 'src/types/api.response';
 // @mui
-import Grid from '@mui/material/Grid2';
-import { Stack } from '@mui/material';
 
-export default function PostList() {
+export default function PostList(): JSX.Element {
   const [enable, setEnable] = useState<boolean>(false);
   const [posts, setPosts] = useState<Posts[]>([]);
 
   /**-------------------------------- useQuery --------------------------------------*/
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery<ApiResponse<Posts[]>>({
     queryKey: ['posts', enable],
     queryFn: fetchPosts
   });
@@ -27,7 +30,7 @@ export default function PostList() {
   /**-------------------------------- useEffect --------------------------------------*/
   /*게시글 data set*/
   useEffect(() => {
-    if (data) {
+    if (data && data.data.length > 0) {
       setPosts(data.data);
     }
   }, [data]);
@@ -71,7 +74,7 @@ export default function PostList() {
 
   /**-------------------------------- function --------------------------------------*/
   /*게시글 반복 렌더링*/
-  const getPosts = () => {
+  const renderPosts = (): JSX.Element => {
     const pairedPosts = [];
     for (let i = 0; i < posts.length; i += 2) {
       pairedPosts.push(
@@ -96,12 +99,12 @@ export default function PostList() {
       );
     }
 
-    return pairedPosts;
+    return <>{pairedPosts}</>;
   };
 
   return (
     <Stack justifyContent="center" alignItems="center" sx={{ width: '100%' }}>
-      <Stack spacing={0}>{getPosts()}</Stack>
+      <Stack spacing={0}>{renderPosts()}</Stack>
     </Stack>
   );
 }

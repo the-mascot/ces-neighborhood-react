@@ -4,32 +4,19 @@
     "paths": {
       "src/*": ["src/*"]
     },
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "target": "ES2022",                         // 최신 JS 기능 사용 (예: optional chaining 등)
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],   // 브라우저 + 최신 JS 지원
+    "module": "ESNext",                         // 최신 모듈 시스템 (웹팩/바벨 호환)
+    "moduleResolution": "Node",                 // Node 방식의 모듈 해석
+    "allowJs": false,                           // JS 파일 허용 여부 (보통 false)
+    "jsx": "react-jsx",                         // React 17+ JSX transform
+    "strict": true,                             // 모든 strict 옵션 활성화
+    "noEmit": true,                             // 빌드 시 JS 출력 안 함 (바벨이 대신함)
+    "esModuleInterop": true,                    // CommonJS 모듈 호환 (import fs from 'fs')
+    "forceConsistentCasingInFileNames": true,   // 대소문자 일치 강제 (윈도우/리눅스 호환)
+    "isolatedModules": true,                    // ESM 호환을 위한 모듈 단위 처리
+    "skipLibCheck": true                        // node_modules 타입 체크 생략 (속도 향상)
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "src/**/*",
-  ]
+  "include": ["src"],                           // 소스 코드 위치
+  "exclude": ["node_modules", "dist"]           // 제외할 디렉토리
 }

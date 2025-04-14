@@ -18,16 +18,17 @@ type Props = {
   message?: React.ReactNode;
 };
 
-function ErrorModal({ message }: Props) {
+function ErrorModal({ message }: Props): JSX.Element {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(true);
-  const handleOnClick = () => {
+
+  const handleOnClick = (): void => {
     setOpen(false);
     navigate(-1);
   };
   /**-------------------------------- components --------------------------------------*/
   /*기본메세지*/
-  const DefaultMessage = () => {
+  const DefaultMessage = (): JSX.Element => {
     return (
       <>
         <Typography variant="subtitle1">에러가 발생했습니다.</Typography>
@@ -40,12 +41,12 @@ function ErrorModal({ message }: Props) {
     <Modal open={open}>
       <Box sx={style}>
         <Grid container spacing={2} mb={3}>
-          <Grid container item justifyContent="center">
+          <Grid container justifyContent="center">
             <Typography variant="h4" color="error" textAlign="center" mb={3}>
               ERROR
             </Typography>
           </Grid>
-          <Grid item>{message ? message : <DefaultMessage />}</Grid>
+          <Grid>{message ? message : <DefaultMessage />}</Grid>
         </Grid>
         <Grid container justifyContent="center">
           <Button fullWidth variant="outlined" color="error" onClick={() => handleOnClick()}>
