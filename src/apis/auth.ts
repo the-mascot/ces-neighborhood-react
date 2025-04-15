@@ -1,14 +1,14 @@
 import endpoints from 'src/apis/endpoints';
-import { JoinReq, LoginReq, LoginRes, OAuthLoginRes } from 'src/types/auth.type';
 import { ApiResponse } from 'src/types/api.response';
+import { JoinReq, LoginReq, LoginRes, OAuthLoginRes } from 'src/types/auth.type';
 
 import createAxiosInstance from './axios';
 
 const axiosInstance = createAxiosInstance({
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
-  timeout: 6000
+  timeout: 6000,
 });
 
 /*로그인*/

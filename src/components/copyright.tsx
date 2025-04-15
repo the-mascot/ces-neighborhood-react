@@ -1,7 +1,7 @@
 import { Box, Link, SxProps, Typography } from '@mui/material';
 
-import { paths } from 'src/routes/paths';
 import RouterLink from 'src/routes/components/router-link';
+import { paths } from 'src/routes/paths';
 
 export default function Copyright(props: SxProps): JSX.Element {
   return (

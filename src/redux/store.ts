@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore } from 'redux-persist';
+
 import persistedReducer from 'src/redux/persisted-reducer';
 
 const store = configureStore({
@@ -7,10 +8,10 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'] // redux-persist 관련 액션 무시
-      }
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'], // redux-persist 관련 액션 무시
+      },
     });
-  }
+  },
 });
 
 const persistor = persistStore(store);

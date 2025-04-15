@@ -1,44 +1,48 @@
 // react
-import { useCallback, useEffect, useState } from 'react';
+import { JSX, useCallback, useEffect, useState } from 'react';
+
 // redux
-import { useDispatch } from 'react-redux';
-import { login } from 'src/redux/slices/auth-slice';
-// libraries
-import * as yup from 'yup';
-import { debounce } from 'lodash';
-import { AxiosError } from 'axios';
-import { useForm, UseFormReturn } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Button, InputLabel, Stack, TextField, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import { debounce } from 'lodash';
+import { useForm, UseFormReturn } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+import * as yup from 'yup';
+
+// libraries
+
 // apis
 import { oAuthLogin } from 'src/apis/auth';
 import { checkNicknameDuplicate, updateMemberInfo } from 'src/apis/member';
 // types
-import { OAuthLoginRes } from 'src/types/auth.type';
-import { UpdateMemberInfoReq } from 'src/types/member.type';
-import { ApiExceptionResponse, ApiResponse } from 'src/types/api.response';
 // components
-import OneButtonModal from 'src/components/one-button-modal';
-import ErrorModal from 'src/components/error-modal';
-import { NeighborhoodLogo } from 'src/components/icon/index';
 import ButtonClearIcon from 'src/components/button-clear-icon';
 import ErrorCaption from 'src/components/error-caption';
-import SuccessCaption from 'src/components/success-caption';
+import ErrorModal from 'src/components/error-modal';
+import { NeighborhoodLogo } from 'src/components/icon';
 
 // @mui
-import { Box, Button, InputLabel, Stack, TextField, Typography } from '@mui/material';
+
 import LoadingSpinner from 'src/components/loading/loading-spinner';
+import OneButtonModal from 'src/components/one-button-modal';
+import SuccessCaption from 'src/components/success-caption';
+import { login } from 'src/redux/slices/auth-slice';
+import { ApiExceptionResponse, ApiResponse } from 'src/types/api.response';
+import { OAuthLoginRes } from 'src/types/auth.type';
+import { UpdateMemberInfoReq } from 'src/types/member.type';
 
 const schema = yup.object().shape({
   nickname: yup
     .string()
     .min(2, '닉네임은 최소 두글자 이상으로 설정해주세요.')
     .max(10, '닉네임은 최대 10글자 이하로 설정해주세요.')
-    .required('닉네임을 입력해주세요.')
+    .required('닉네임을 입력해주세요.'),
 });
-export default function OauthLogin() {
+export default function OauthLogin(): JSX.Element {
   // navigate
   const navigate = useNavigate();
   // query param
@@ -58,7 +62,7 @@ export default function OauthLogin() {
 
   /**-------------------------------- useForm --------------------------------------*/
   const form = useForm<UpdateMemberInfoReq>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   });
 
   const nicknameValue = form.watch('nickname');
@@ -73,12 +77,12 @@ export default function OauthLogin() {
     enabled: !!code && !!csrfState,
     retry: false,
     refetchOnWindowFocus: false,
-    refetchOnMount: false
+    refetchOnMount: false,
   });
 
   /**-------------------------------- useMutation --------------------------------------*/
   const mutation = useMutation({
-    mutationFn: updateMemberInfo
+    mutationFn: updateMemberInfo,
   });
 
   /**-------------------------------- useEffect --------------------------------------*/
@@ -98,7 +102,7 @@ export default function OauthLogin() {
     if (isSuccess && data.data.isNewMember) {
       form.setValue('nickname', data.data.nickname);
     } else if (isSuccess) {
-      dispatch(login({ nickname: data.data.nickname.toString(), profileImage: data.data.profileImage.toString() }));
+      dispatch(login({ nickname: data.data.nickname, profileImage: data.data.profileImage }));
       navigate('/', { replace: true });
     }
   }, [isSuccess]);
@@ -143,7 +147,7 @@ export default function OauthLogin() {
         onError: () => {
           setOpenError(true);
           setIsSubmitting(false);
-        }
+        },
       });
     } else {
       navigate('/');
@@ -249,7 +253,7 @@ function NicknameForm({ form, onSubmit, disableNext, isDuplicateNickname, recomm
           defaultValue={recommendNickname}
           inputProps={{ maxLength: 10 }}
           InputProps={{
-            endAdornment: <ButtonClearIcon onClick={() => form.resetField('nickname')} />
+            endAdornment: <ButtonClearIcon onClick={() => form.resetField('nickname')} />,
           }}
         />
         <NicknameStatusMessage />

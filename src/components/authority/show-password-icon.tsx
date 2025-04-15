@@ -1,7 +1,8 @@
-import { IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import * as React from 'react';
 import { JSX } from 'react';
+
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton, InputAdornment } from '@mui/material';
 
 type Props = {
   showPassword: boolean;

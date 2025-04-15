@@ -1,4 +1,6 @@
 import * as React from 'react';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -7,12 +9,10 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-export default function FAQ() {
+export default function FAQ(): JSX.Element {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
-  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean): void => {
     setExpanded(isExpanded ? panel : false);
   };
 
@@ -26,7 +26,7 @@ export default function FAQ() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: { xs: 3, sm: 6 }
+        gap: { xs: 3, sm: 6 },
       }}
     >
       <Typography
@@ -35,7 +35,7 @@ export default function FAQ() {
         sx={{
           color: 'text.primary',
           width: { sm: '100%', md: '60%' },
-          textAlign: { sm: 'left', md: 'center' }
+          textAlign: { sm: 'left', md: 'center' },
         }}
       >
         Frequently asked questions

@@ -1,13 +1,13 @@
+import createAxiosInstance from 'src/apis/axios';
 import endpoints from 'src/apis/endpoints';
 import { ApiResponse } from 'src/types/api.response';
 import { Post, PostLikeReq, Posts } from 'src/types/board.type';
-import createAxiosInstance from 'src/apis/axios';
 
 const axiosInstance = createAxiosInstance({
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
-  timeout: 5000
+  timeout: 5000,
 });
 
 /*게시물 목록 가져오기*/

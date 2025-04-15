@@ -1,5 +1,6 @@
+import React, { JSX } from 'react';
+
 import { ReactComponent as NeighborhoodSvg } from 'src/assets/images/neighborhood_logo.svg';
-import React, { memo } from 'react';
 
 interface IIconProps {
   height?: number | string;
@@ -11,7 +12,7 @@ interface IIconProps {
   onClick?: () => void;
 }
 
-function NeighborhoodIcon(props: IIconProps) {
+function NeighborhoodIcon(props: IIconProps): JSX.Element {
   return <NeighborhoodSvg {...props} />;
 }
 

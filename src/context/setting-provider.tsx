@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { SettingContextType, SettingsType } from 'src/types/theme.type';
+import { JSX, useCallback, useMemo } from 'react';
+
 import { SettingContext } from 'src/context/setting-context';
 import { useLocalStorage } from 'src/hooks/use-local-storage';
+import { SettingContextType, SettingsType } from 'src/types/theme.type';
 
 const defaultSettings: SettingsType = {
   themeMode: 'light'
@@ -11,13 +12,13 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function SettingProvider({ children }: Props) {
+export default function SettingProvider({ children }: Props): JSX.Element {
   const [settings, setSettings] = useLocalStorage('settings', defaultSettings);
 
   /*settings 값 업데이트 function*/
   const onUpdate = useCallback(
-    (name: string, value: string | boolean) => {
-      setSettings((prevState: SettingsType) => ({
+    (name: string, value: string | boolean): void => {
+      setSettings((prevState: any) => ({
         ...prevState,
         [name]: value
       }));
@@ -32,7 +33,7 @@ export default function SettingProvider({ children }: Props) {
 
   /*theme color 변경*/
   const toggleColorMode = useCallback(() => {
-    setSettings((prevState: SettingsType) => ({
+    setSettings((prevState: any) => ({
       ...prevState,
       themeMode: prevState.themeMode === 'dark' ? 'light' : 'dark'
     }));
@@ -41,7 +42,7 @@ export default function SettingProvider({ children }: Props) {
   /*Setting Context 값 memozation*/
   const memoizedValue = useMemo<SettingContextType>(
     () => ({
-      ...settings,
+      ...settings as SettingContextType,
       onUpdate,
       onReset,
       toggleColorMode

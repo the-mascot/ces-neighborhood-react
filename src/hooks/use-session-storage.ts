@@ -1,41 +1,51 @@
-import { sessionStorageAvailable } from 'src/utils/storage-available';
 import { useEffect, useState } from 'react';
 
-// ----------------------------------------------------------------------
+import { sessionStorageAvailable } from 'src/utils/storage-available';
 
-export function useSessionStorage<ValueType>(key: string, defaultValue: ValueType) {
+// ----------------------------------------------------------------------
+type UseSessionStorageReturn<T> = [
+  value: T | string | null, 
+  setValueInSessionStorage: ((newValue: T) => void) & ((updater: (prevValue: T) => T) => void)
+];
+
+export function useSessionStorage<T>(
+  key: string,
+  defaultValue: T
+): UseSessionStorageReturn<T> {
   const storageAvailable = sessionStorageAvailable();
 
   const [value, setValue] = useState(() => {
-    const storedValue = storageAvailable ? localStorage.getItem(key) : null;
+    const storedValue = storageAvailable ? sessionStorage.getItem(key) : null;
 
     return storedValue === null ? defaultValue : JSON.parse(storedValue);
   });
 
   useEffect(() => {
-    const listener = (e: StorageEvent) => {
+    const listener = (e: StorageEvent): void => {
       if (e.storageArea === sessionStorage && e.key === key) {
         setValue(e.newValue ? JSON.parse(e.newValue) : e.newValue);
       }
     };
     window.addEventListener('storage', listener);
 
-    return () => {
+    return (): void => {
       window.removeEventListener('storage', listener);
     };
   }, [key, defaultValue]);
 
-  const setValueInSessionStorage = (newValue: ValueType) => {
-    setValue((currentValue: ValueType) => {
-      const result = typeof newValue === 'function' ? newValue(currentValue) : newValue;
+  const setValueInSessionStorage = (newValue: T | ((prevValue: T) => T)): void => {
+    setValue((currentValue: T) => {
+      const result = typeof newValue === 'function' 
+        ? (newValue as ((prevValue: T) => T))(currentValue) 
+        : newValue;
 
       if (storageAvailable) {
-        localStorage.setItem(key, JSON.stringify(result));
+        sessionStorage.setItem(key, JSON.stringify(result));
       }
 
       return result;
     });
   };
 
-  return [value, setValueInSessionStorage];
+  return [value, setValueInSessionStorage as any];
 }

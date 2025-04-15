@@ -1,7 +1,7 @@
 import type {} from '@mui/material/themeCssVarsAugmentation';
-import { ThemeOptions, alpha } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
 import { PaletteMode } from '@mui/material';
+import { red } from '@mui/material/colors';
+import { ThemeOptions, alpha } from '@mui/material/styles';
 
 declare module '@mui/material/styles/createPalette' {
   interface ColorRange {
@@ -250,7 +250,10 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
       },
       MuiAccordionDetails: {
         styleOverrides: {
-          root: { mb: 20, border: 'none' }
+          root: {
+            marginBottom: 20, 
+            border: 'none' 
+          }
         }
       },
       MuiToggleButtonGroup: {
@@ -292,14 +295,14 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
           disableRipple: true
         },
         styleOverrides: {
-          root: {
+          root: ({ theme }) => ({
             boxSizing: 'border-box',
             transition: 'all 100ms ease-in',
             '&:focus-visible': {
               outline: `3px solid ${alpha(brand[500], 0.5)}`,
               outlineOffset: '2px'
             }
-          }
+          })
         }
       },
       MuiButton: {
@@ -411,8 +414,7 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
         styleOverrides: {
           root: ({ theme }) => ({
             alignSelf: 'center',
-            py: 1.5,
-            px: 0.5,
+            padding: '1.5px 0.5px',
             background: `linear-gradient(to bottom right, ${brand[50]}, ${brand[100]})`,
             border: '1px solid',
             borderColor: `${alpha(brand[500], 0.3)}`,
@@ -655,22 +657,22 @@ export default function lpThemeOptions(mode: PaletteMode): ThemeOptions {
       },
       MuiInputLabel: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: {
             textAlign: 'start',
             fontFamily: 'Pretendard',
             fontWeight: 600,
             fontSize: '16px',
             marginBottom: 2
-          })
+          }
         }
       },
       MuiFormControlLabel: {
         styleOverrides: {
-          label: ({ theme }) => ({
+          label: {
             fontFamily: 'Pretendard',
             fontWeight: 400,
             fontSize: '17px'
-          })
+          }
         }
       }
     }

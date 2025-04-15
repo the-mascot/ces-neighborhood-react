@@ -3,15 +3,15 @@ export const paths = {
   auth: {
     login: '/login',
     join: '/join',
-    oauth: '/login/:registrationId'
+    oauth: '/login/:registrationId',
   },
   board: {
     posts: '/board/posts',
-    post: '/board/post/:postNo'
+    post: '/board/post/:postNo',
   },
   error: {
     p403: '/403',
     p404: '/404',
-    p500: '/500'
-  }
+    p500: '/500',
+  },
 };

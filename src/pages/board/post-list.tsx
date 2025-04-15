@@ -1,20 +1,21 @@
 // react
 import React, { useCallback, useEffect, useState } from 'react';
+
 // libraries
-import { useMutation, useQuery } from '@tanstack/react-query';
 
 // apis
+import { Box, Button, Stack } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { Stack } from '@mui/material';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { fetchPosts, updatePostLike } from 'src/apis/board';
 // types
-import { Posts } from 'src/types/board.type';
 // components
+import PostCardComponent from 'src/components/board/PostCardComponent';
 import ErrorModal from 'src/components/error-modal';
 import LoadingSpinner from 'src/components/loading/loading-spinner';
-import PostCardComponent from 'src/components/board/PostCardComponent';
 import { ApiResponse } from 'src/types/api.response';
+import { Posts } from 'src/types/board.type';
 // @mui
 
 export default function PostList(): JSX.Element {
@@ -103,7 +104,12 @@ export default function PostList(): JSX.Element {
   };
 
   return (
-    <Stack justifyContent="center" alignItems="center" sx={{ width: '100%' }}>
+    <Stack justifyContent="center" alignItems="center" width="100%">
+      <Box alignItems="end" width="100%">
+        <Button variant="contained" color="info">
+          글쓰기
+        </Button>
+      </Box>
       <Stack spacing={0}>{renderPosts()}</Stack>
     </Stack>
   );

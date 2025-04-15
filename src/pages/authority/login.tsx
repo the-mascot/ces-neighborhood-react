@@ -1,32 +1,36 @@
 // react
 import * as React from 'react';
 import { useState } from 'react';
+
 // redux
-import { login as loginReducer } from 'src/redux/slices/auth-slice';
-// libraries
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Button, Checkbox, FormControlLabel, InputLabel, Link, Stack, TextField, Typography } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+
+// libraries
+
 // apis
 import { login } from 'src/apis/auth';
 import endpoints from 'src/apis/endpoints';
 // types
-import { LoginReq, LoginRes } from 'src/types/auth.type';
 // paths
-import { paths } from 'src/routes/paths';
 // components
-import { RouterLink } from 'src/routes/components';
 import { ReactComponent as GoogleLogo } from 'src/assets/images/google_logo.svg';
 import { ReactComponent as NaverLogo } from 'src/assets/images/naver_logo.svg';
-import { NeighborhoodLogo } from 'src/components/icon';
 import ShowPasswordIcon from 'src/components/authority/show-password-icon';
 import BackButton from 'src/components/back-button';
+import { NeighborhoodLogo } from 'src/components/icon';
+import { login as loginReducer } from 'src/redux/slices/auth-slice';
+import { RouterLink } from 'src/routes/components';
+import { paths } from 'src/routes/paths';
+import { LoginReq, LoginRes } from 'src/types/auth.type';
+
 // @mui
-import { Box, Button, Checkbox, FormControlLabel, InputLabel, Link, Stack, TextField, Typography } from '@mui/material';
-import { alpha, styled } from '@mui/material/styles';
 
 const GoogleLoginButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[900],
@@ -36,14 +40,14 @@ const GoogleLoginButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha('#FFF', 0.3),
     borderColor: theme.palette.grey[900],
-    boxShadow: `0 0 0 1px  ${alpha(theme.palette.grey[900], 0.5)}`
-  }
+    boxShadow: `0 0 0 1px  ${alpha(theme.palette.grey[900], 0.5)}`,
+  },
 }));
 
 // yup schema
 const schema = yup.object().shape({
   userId: yup.string().email('유효한 이메일을 입력해주세요.').required('ID를 입력해주세요.'),
-  password: yup.string().required('비밀번호를 입력해주세요')
+  password: yup.string().required('비밀번호를 입력해주세요'),
 });
 
 export default function Login() {
@@ -59,14 +63,14 @@ export default function Login() {
     register,
     handleSubmit,
     trigger,
-    formState: { errors }
+    formState: { errors },
   } = useForm<LoginReq>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   });
 
   /**-------------------------------- useMutation --------------------------------------*/
   const mutation = useMutation({
-    mutationFn: login
+    mutationFn: login,
   });
 
   /**-------------------------------- onSubmit --------------------------------------*/
@@ -77,7 +81,7 @@ export default function Login() {
           loginReducer({ nickname: data.data.nickname.toString(), profileImage: data.data.profileImage.toString() })
         );
         navigate('/', { replace: true });
-      }
+      },
     });
   };
 
@@ -147,7 +151,7 @@ export default function Login() {
             {...register('password')}
             autoComplete="off"
             InputProps={{
-              endAdornment: <ShowPasswordIcon showPassword={showPassword} setShowPassword={setShowPassword} />
+              endAdornment: <ShowPasswordIcon showPassword={showPassword} setShowPassword={setShowPassword} />,
             }}
           />
           {errors.password && !errors.userId && (

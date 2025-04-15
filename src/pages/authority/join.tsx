@@ -1,30 +1,35 @@
 // react
 import { useCallback, useEffect, useRef, useState } from 'react';
+
 // libraries
-import * as yup from 'yup';
-import { debounce } from 'lodash';
-import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
+import { debounce } from 'lodash';
+import { useForm } from 'react-hook-form';
+
 // apis
+import * as yup from 'yup';
 import { join } from 'src/apis/auth';
 import { checkIdDuplicate, checkNicknameDuplicate } from 'src/apis/member';
+
 // types
 import { JoinReq } from 'src/types/auth.type';
+
 // components
-import OneButtonModal from 'src/components/one-button-modal';
-import { NeighborhoodLogo } from 'src/components/icon/index';
 import ShowPasswordIcon from 'src/components/authority/show-password-icon';
-import ErrorCaption from 'src/components/error-caption';
-import ErrorSuccessCaption from 'src/components/error-success-caption';
-import SuccessCaption from 'src/components/success-caption';
 import BackButton from 'src/components/back-button';
 import ButtonClearIcon from 'src/components/button-clear-icon';
+import ErrorCaption from 'src/components/error-caption';
+import ErrorSuccessCaption from 'src/components/error-success-caption';
+import { NeighborhoodLogo } from 'src/components/icon';
+import OneButtonModal from 'src/components/one-button-modal';
+import SuccessCaption from 'src/components/success-caption';
+
 // @mui
-import { Box, Button, InputLabel, Stack, TextField, Typography } from '@mui/material';
 import CelebrationIcon from '@mui/icons-material/Celebration';
+import { Box, Button, InputLabel, Stack, TextField, Typography } from '@mui/material';
 
 // yup schema
 const schema = yup.object().shape({
@@ -44,7 +49,7 @@ const schema = yup.object().shape({
     .required()
 });
 
-export default function Join() {
+export default function Join(): JSX.Element {
   // navigate
   const navigate = useNavigate();
   // states
@@ -114,7 +119,7 @@ export default function Join() {
 
   /*ID 값 변경 시 validation*/
   useEffect(() => {
-    const userIdValidate = async () => {
+    const userIdValidate = async (): Promise<void> => {
       // ID 중복여부 검사전 초기화
       setIsDuplicateId(null);
       if (!userIdValue) {
@@ -143,7 +148,7 @@ export default function Join() {
 
   /*비밀번호 변경 시 validation*/
   useEffect(() => {
-    const passwordValidate = async () => {
+    const passwordValidate = async (): Promise<void> => {
       setErrorLowerCase(true);
       setErrorNumber(true);
       setErrorSpecialChar(true);
@@ -167,7 +172,7 @@ export default function Join() {
     };
 
     passwordValidate();
-  }, [passwordValue]);
+  }, [passwordValue, watch, clearErrors]);
 
   /*닉네임 변경 시 validation*/
   useEffect(() => {
@@ -366,17 +371,14 @@ export default function Join() {
           >
             <InputLabel htmlFor="email">아이디</InputLabel>
             <TextField
+              {...register('userId')}
               id="email"
               placeholder="이메일을 입력해주세요."
-              maxLength={12}
-              autoFocus
               fullWidth
-              {...register('userId')}
               autoComplete="off"
               sx={{ mb: 1 }}
-              inputProps={{ maxLength: 254 }}
-              InputProps={{
-                endAdornment: <ButtonClearIcon onClick={() => resetField('userId')} />
+              slotProps={{
+                input: <ButtonClearIcon onClick={() => resetField('userId')} />
               }}
             />
             {/**ID 필드 상태메세지*/}
@@ -409,7 +411,6 @@ export default function Join() {
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="비밀번호를 입력해주세요."
-                maxLength={12}
                 autoFocus
                 fullWidth
                 {...register('password')}
@@ -450,7 +451,6 @@ export default function Join() {
                 id="nickname"
                 type="text"
                 placeholder="사용할 닉네임을 입력해주세요."
-                maxLength={12}
                 autoFocus
                 fullWidth
                 {...register('nickname')}

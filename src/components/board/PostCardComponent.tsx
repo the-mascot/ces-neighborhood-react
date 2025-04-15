@@ -1,17 +1,17 @@
 // types
 // components
 // @mui
-import { styled } from '@mui/system';
-import Grid from '@mui/material/Grid';
-import { Card, CardContent, IconButton, Link, Stack, Tooltip, Typography } from '@mui/material';
 // icons
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import { Card, CardContent, IconButton, Link, Stack, Tooltip, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/system';
 
-import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
+import { paths } from 'src/routes/paths';
 import { Posts } from 'src/types/board.type';
 
 /*게시글 제목(Typography)*/
@@ -36,7 +36,7 @@ const PostBody = styled(Typography)(() => ({
   WebkitLineClamp: 3, // 표시할 줄 수를 설정합니다. 여기서는 2줄로 설정
   lineHeight: '1.5', // 줄 간격을 설정 (옵션)
   maxHeight: '4.5em', // 최대 높이를 줄 수에 맞게 설정
-  minHeight: '4.5em'
+  minHeight: '4.5em',
 }));
 
 type PostCardProps = {
@@ -49,7 +49,7 @@ const PostCard = styled(Card, { shouldForwardProp: (prop) => prop !== 'isRight' 
   minHeight: '210px',
   backgroundColor: '#FFF',
   borderLeft: 0,
-  ...(isRight && { borderRight: 0 })
+  ...(isRight && { borderRight: 0 }),
 }));
 
 type Props = {

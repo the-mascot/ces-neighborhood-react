@@ -1,4 +1,4 @@
-export const scrollToSection = (sectionId: string) => {
+export const scrollToSection = (sectionId: string): void => {
   const sectionElement = document.getElementById(sectionId);
   const offset = 128;
   if (sectionElement) {

@@ -3,8 +3,12 @@ import { useState, useEffect } from 'react';
 import { localStorageAvailable } from 'src/utils/storage-available';
 
 // ----------------------------------------------------------------------
+type UseLocalStorageReturn<T> = [
+  value: T | string | null, 
+  setValueInLocalStorage: ((newValue: T) => void) & ((updater: (prevValue: T) => T) => void)
+];
 
-export function useLocalStorage<ValueType>(key: string, defaultValue: ValueType) {
+export function useLocalStorage<T>(key: string, defaultValue: T): UseLocalStorageReturn<T> {
   const storageAvailable = localStorageAvailable();
 
   const [value, setValue] = useState(() => {
@@ -14,21 +18,23 @@ export function useLocalStorage<ValueType>(key: string, defaultValue: ValueType)
   });
 
   useEffect(() => {
-    const listener = (e: StorageEvent) => {
+    const listener = (e: StorageEvent): void => {
       if (e.storageArea === localStorage && e.key === key) {
         setValue(e.newValue ? JSON.parse(e.newValue) : e.newValue);
       }
     };
     window.addEventListener('storage', listener);
 
-    return () => {
+    return (): void => {
       window.removeEventListener('storage', listener);
     };
   }, [key, defaultValue]);
 
-  const setValueInLocalStorage = (newValue: ValueType) => {
-    setValue((currentValue: ValueType) => {
-      const result = typeof newValue === 'function' ? newValue(currentValue) : newValue;
+  const setValueInLocalStorage = (newValue: T | ((prevValue: T) => T)): void => {
+    setValue((currentValue: T) => {
+      const result = typeof newValue === 'function' 
+        ? (newValue as ((prevValue: T) => T))(currentValue) 
+        : newValue;
 
       if (storageAvailable) {
         localStorage.setItem(key, JSON.stringify(result));
@@ -38,5 +44,5 @@ export function useLocalStorage<ValueType>(key: string, defaultValue: ValueType)
     });
   };
 
-  return [value, setValueInLocalStorage];
+  return [value, setValueInLocalStorage as any];
 }

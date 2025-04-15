@@ -1,8 +1,10 @@
 // @mui
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Copyright from 'src/components/copyright';
 import * as React from 'react';
+
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+
+import Copyright from 'src/components/copyright';
 //
 
 // ----------------------------------------------------------------------
@@ -11,7 +13,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function EmptyLayout({ children }: Props) {
+export default function EmptyLayout({ children }: Props): JSX.Element {
   return (
     <>
       <Container component="main" maxWidth="xs">
@@ -22,7 +24,7 @@ export default function EmptyLayout({ children }: Props) {
             maxWidth: 400,
             minHeight: '100vh',
             textAlign: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           {children}

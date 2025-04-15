@@ -1,13 +1,15 @@
 import { memo } from 'react';
+
 // @mui
-import { useTheme } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
+
 //
 import BackgroundShape from './background-shape';
 
 // ----------------------------------------------------------------------
 
-function PageNotFoundIllustration({ ...other }: BoxProps) {
+function PageNotFoundIllustration({ ...other }: BoxProps): JSX.Element {
   const theme = useTheme();
 
   const PRIMARY_LIGHT = theme.palette.primary.light;
@@ -25,7 +27,7 @@ function PageNotFoundIllustration({ ...other }: BoxProps) {
       xmlns="https://www.w3.org/2000/svg"
       sx={{
         height: 260,
-        my: { xs: 5, sm: 10 }
+        my: { xs: 5, sm: 10 },
       }}
     >
       <BackgroundShape />

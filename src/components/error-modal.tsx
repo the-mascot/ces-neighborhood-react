@@ -1,5 +1,6 @@
-import { Box, Button, Grid, Modal, Typography } from '@mui/material';
 import { memo, useState } from 'react';
+
+import { Box, Button, Grid, Modal, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const style = {
@@ -11,7 +12,7 @@ const style = {
   bgcolor: 'background.paper',
   border: '0px',
   boxShadow: 24,
-  p: 4
+  p: 4,
 };
 
 type Props = {

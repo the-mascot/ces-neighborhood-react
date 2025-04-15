@@ -1,13 +1,7 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import { Button, Typography } from '@mui/material';
 
-import LogoCollection from 'src/components/LogoCollection';
-import Highlights from 'src/components/Highlights';
-import Pricing from 'src/components/Pricing';
-import Features from 'src/components/Features';
-import FAQ from 'src/components/FAQ';
+import { Button, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
 
 export default function Home(): JSX.Element {
   return (
@@ -26,16 +20,6 @@ export default function Home(): JSX.Element {
         <Typography variant="body1">안녕하세요 body1 입니다.</Typography>
         <Typography variant="body2">안녕하세요 body2 입니다.</Typography>
         <Typography variant="caption">안녕하세요 caption 입니다.</Typography>
-        <LogoCollection />
-        <Features />
-        <Divider />
-        <Divider />
-        <Highlights />
-        <Divider />
-        <Pricing />
-        <Divider />
-        <FAQ />
-        <Divider />
       </Box>
     </>
   );

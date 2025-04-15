@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, CreateAxiosDefaults } from 'axios';
 
-import { store } from 'src/redux/store';
-import { logout } from 'src/redux/slices/auth-slice';
 import { Constant } from 'src/constants/constant';
+import { logout } from 'src/redux/slices/auth-slice';
+import { store } from 'src/redux/store';
 import { removeToken, setToken } from 'src/utils/token-utils';
 
 /**-------------------------------- 요청 인터셉터 --------------------------------------*/

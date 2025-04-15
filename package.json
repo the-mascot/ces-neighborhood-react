@@ -46,12 +46,6 @@
     "re-start": "rm -rf build node_modules && yarn install && yarn start",
     "re-build": "rm -rf build node_modules && yarn install && yarn build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -73,15 +67,14 @@
     "@typescript-eslint/eslint-plugin": "^8.29.1",
     "@typescript-eslint/parser": "^8.29.1",
     "env-cmd": "^10.1.0",
-    "eslint": "^9.24.0",
-    "eslint-config-airbnb": "^19.0.4",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-import-resolver-typescript": "^3.10.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.5.3",
     "react-app-rewired": "^2.2.1",
     "terser-webpack-plugin": "^5.3.10"

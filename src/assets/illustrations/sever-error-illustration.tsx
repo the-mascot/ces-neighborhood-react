@@ -1,13 +1,15 @@
 import { memo } from 'react';
+
 // @mui
-import { useTheme } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
+
 //
 import BackgroundShape from './background-shape';
 
 // ----------------------------------------------------------------------
 
-function SeverErrorIllustration({ ...other }: BoxProps) {
+function SeverErrorIllustration({ ...other }: BoxProps): JSX.Element {
   const theme = useTheme();
 
   const PRIMARY_LIGHT = theme.palette.primary.light;

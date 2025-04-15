@@ -14,7 +14,7 @@ module.exports = {
     },
     'import/resolver': {
       typescript: {
-        project: './tsconfig.json' // tsconfig 경로 (필요시 수정)
+        project: './tsconfig.json'
       }
     }
   },
@@ -23,14 +23,7 @@ module.exports = {
     es2021: true,
     node: true
   },
-  plugins: [
-    '@typescript-eslint',
-    'react',
-    'react-hooks',
-    'jsx-a11y',
-    'import',
-    'prettier'
-  ],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'jsx-a11y', 'import'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -40,12 +33,9 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
-    'plugin:prettier/recommended'
+    'prettier'
   ],
   rules: {
-    // 기본 스타일
-    'prettier/prettier': 'error',
-
     // 타입스크립트 관련
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'error',
@@ -53,17 +43,29 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
 
     // React 관련
-    'react/react-in-jsx-scope': 'off', // React 17 이후 자동 import
-    'react/prop-types': 'off',         // TS를 쓰므로 prop-types 불필요
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
 
     // Import 정렬/중복 방지
     'import/order': [
-      'error',
+      'off',
       {
-        groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
-        'newlines-between': 'always'
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        },
+        pathGroups: [
+          {
+            pattern: 'react',
+            group: 'external',
+            position: 'before'
+          }
+        ],
+        pathGroupsExcludedImportTypes: ['react']
       }
     ],
-    'import/no-duplicates': 'warn'
+    'import/no-duplicates': 'error'
   }
 };

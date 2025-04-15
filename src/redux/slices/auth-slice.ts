@@ -9,7 +9,7 @@ type LoginInfo = {
 const initialState: LoginInfo = {
   nickname: '',
   profileImage: '',
-  isAuthenticated: false
+  isAuthenticated: false,
 };
 
 export const authSlice = createSlice({
@@ -25,8 +25,8 @@ export const authSlice = createSlice({
       state.nickname = '';
       state.profileImage = '';
       state.isAuthenticated = false;
-    }
-  }
+    },
+  },
 });
 
 export const { login, logout } = authSlice.actions;

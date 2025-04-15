@@ -1,16 +1,16 @@
 import { AxiosResponse } from 'axios';
 
+import createAxiosInstance from 'src/apis/axios';
 import endpoints from 'src/apis/endpoints';
 import { ApiResponse } from 'src/types/api.response';
-import { UpdateMemberInfoReq } from 'src/types/member.type';
 import { LoginRes } from 'src/types/auth.type';
-import createAxiosInstance from 'src/apis/axios';
+import { UpdateMemberInfoReq } from 'src/types/member.type';
 
 const axiosInstance = createAxiosInstance({
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
-  timeout: 5000
+  timeout: 5000,
 });
 
 /*ID 중복체크*/

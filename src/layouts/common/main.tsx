@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function Main({ children }: Props) {
+export default function Main({ children }: Props): JSX.Element {
   return (
     <Container
       component="main"
@@ -14,7 +14,7 @@ export default function Main({ children }: Props) {
         flexDirection: 'column',
         alignItems: 'center',
         pt: { xs: 14, sm: 20 },
-        pb: { xs: 8, sm: 12 }
+        pb: { xs: 8, sm: 12 },
       }}
     >
       {children}

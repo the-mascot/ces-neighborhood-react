@@ -1,15 +1,15 @@
 import * as React from 'react';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import InputLabel from '@mui/material/InputLabel';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-
 import { visuallyHidden } from '@mui/utils';
-import { styled } from '@mui/material/styles';
 
 const StyledBox = styled('div')(({ theme }) => ({
   alignSelf: 'center',
@@ -24,16 +24,16 @@ const StyledBox = styled('div')(({ theme }) => ({
   backgroundSize: 'cover',
   [theme.breakpoints.up('sm')]: {
     marginTop: theme.spacing(10),
-    height: 700
+    height: 700,
   },
   ...theme.applyStyles('dark', {
     boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
     backgroundImage: `url(${'/static/images/templates/templates-images/hero-dark.png'})`,
-    outlineColor: 'hsla(210, 100%, 80%, 0.1)'
-  })
+    outlineColor: 'hsla(210, 100%, 80%, 0.1)',
+  }),
 }));
 
-export default function Hero() {
+export default function Hero(): JSX.Element {
   // @ts-ignore
   return (
     <Box
@@ -43,8 +43,8 @@ export default function Hero() {
         backgroundRepeat: 'no-repeat',
         backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)',
         ...theme.applyStyles('dark', {
-          backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)'
-        })
+          backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)',
+        }),
       })}
     >
       <Container
@@ -53,7 +53,7 @@ export default function Hero() {
           flexDirection: 'column',
           alignItems: 'center',
           pt: { xs: 14, sm: 20 },
-          pb: { xs: 8, sm: 12 }
+          pb: { xs: 8, sm: 12 },
         }}
       >
         <Stack spacing={2} useFlexGap sx={{ alignItems: 'center', width: { xs: '100%', sm: '70%' } }}>
@@ -63,7 +63,7 @@ export default function Hero() {
               display: 'flex',
               flexDirection: { xs: 'column', sm: 'row' },
               alignItems: 'center',
-              fontSize: 'clamp(3rem, 10vw, 3.5rem)'
+              fontSize: 'clamp(3rem, 10vw, 3.5rem)',
             }}
           >
             Our&nbsp;latest&nbsp;
@@ -74,8 +74,8 @@ export default function Hero() {
                 fontSize: 'inherit',
                 color: 'primary.main',
                 ...theme.applyStyles('dark', {
-                  color: 'primary.light'
-                })
+                  color: 'primary.light',
+                }),
               })}
             >
               products
@@ -85,7 +85,7 @@ export default function Hero() {
             sx={{
               textAlign: 'center',
               color: 'text.secondary',
-              width: { sm: '100%', md: '80%' }
+              width: { sm: '100%', md: '80%' },
             }}
           >
             Explore our cutting-edge dashboard, delivering high-quality solutions tailored to your needs. Elevate your

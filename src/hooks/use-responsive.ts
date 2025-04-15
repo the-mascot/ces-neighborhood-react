@@ -40,7 +40,7 @@ export function useResponsive(query: Query, start?: Value, end?: Value): ReturnT
 
 type BreakpointOrNull = Breakpoint | null;
 
-export function useWidth() {
+export function useWidth(): BreakpointOrNull {
   const theme = useTheme();
 
   const keys = [...theme.breakpoints.keys].reverse();

@@ -1,12 +1,9 @@
 // react
 import { useState } from 'react';
+
 // libraries
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router';
-import { RootState } from 'src/redux/store';
-// components
-import { NeighborhoodLogo } from 'src/components/icon/index';
-// @mui
+import { Logout, Settings } from '@mui/icons-material';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Avatar,
@@ -20,15 +17,21 @@ import {
   MenuItem,
   PaletteMode,
   styled,
-  Toolbar
+  Toolbar,
 } from '@mui/material';
-import { Logout, Settings } from '@mui/icons-material';
-import MenuIcon from '@mui/icons-material/Menu';
-// data
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router';
+
+// components
+// @mui
+
+import { NeighborhoodLogo } from 'src/components/icon/index';
 import { useNavData } from 'src/layouts/config-navigation';
+import { logout } from 'src/redux/slices/auth-slice';
+import { RootState } from 'src/redux/store';
+// data
 // paths
 import { paths } from 'src/routes/paths';
-import { logout } from 'src/redux/slices/auth-slice';
 import { removeToken } from 'src/utils/token-utils';
 
 interface Props {
@@ -50,15 +53,15 @@ const MenuButton = styled(Button)<MenuButtonProps>(({ theme, active }) => ({
   borderRadius: '0',
   borderBottom: active ? '3px solid #ff3f3f94' : 'none',
   '&:hover': {
-    backgroundColor: theme.palette.grey[100]
+    backgroundColor: theme.palette.grey[100],
   },
   ...theme.applyStyles('dark', {
     color: '#fff',
-    borderBottom: active ? '3px solid #fff' : 'none'
-  })
+    borderBottom: active ? '3px solid #fff' : 'none',
+  }),
 }));
 
-export default function NavigationBar({ mode, toggleColorMode }: Props) {
+export default function NavigationBar({ mode, toggleColorMode }: Props): JSX.Element {
   // 메뉴 Data
   const navData = useNavData();
   // navigate
@@ -74,17 +77,17 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
 
   /**-------------------------------- 이벤트헨들러 --------------------------------------*/
   /*프로필 클릭이벤트*/
-  const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     setAnchorEl(event.currentTarget);
   };
 
   /*프로필메뉴 닫기*/
-  const handleProfileMenuClose = () => {
+  const handleProfileMenuClose = (): void => {
     setAnchorEl(null);
   };
 
   /*로그아웃 클릭이벤트*/
-  const handleLogoutClick = () => {
+  const handleLogoutClick = (): void => {
     dispatch(logout());
     removeToken();
     window.location.href = `${window.location.origin}/`;
@@ -103,8 +106,8 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
             maxHeight: 80,
             bgcolor: 'hsla(220, 60%, 99%, 0.6)',
             ...theme.applyStyles('dark', {
-              bgcolor: 'hsla(220, 0%, 0%, 0.7)'
-            })
+              bgcolor: 'hsla(220, 0%, 0%, 0.7)',
+            }),
           })}
         >
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
@@ -132,7 +135,7 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
             sx={{
               display: { xs: 'none', md: 'flex' },
               gap: 0.5,
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             {!isAuthenticated && (
@@ -168,7 +171,7 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
                         width: 32,
                         height: 32,
                         ml: -0.5,
-                        mr: 1
+                        mr: 1,
                       },
                       '&::before': {
                         content: '""',
@@ -180,9 +183,9 @@ export default function NavigationBar({ mode, toggleColorMode }: Props) {
                         height: 10,
                         bgcolor: 'background.paper',
                         transform: 'translateY(-50%) rotate(45deg)',
-                        zIndex: 0
-                      }
-                    }
+                        zIndex: 0,
+                      },
+                    },
                   }}
                 >
                   <MenuItem onClick={handleProfileMenuClose}>

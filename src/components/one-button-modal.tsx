@@ -1,6 +1,6 @@
+import { JSX, memo } from 'react';
+
 import { Box, Button, Grid, Modal, Typography } from '@mui/material';
-import { memo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const style = {
   position: 'absolute' as const,
@@ -11,7 +11,7 @@ const style = {
   bgcolor: 'background.paper',
   border: '0px',
   boxShadow: 24,
-  p: 4
+  p: 4,
 };
 
 type Props = {
@@ -22,8 +22,8 @@ type Props = {
   onClick: () => void;
 };
 
-function OneButtonModal({ title, message, buttonMessage, open, onClick }: Props) {
-  const DefaultErrorMessage = () => {
+function OneButtonModal({ title, message, buttonMessage, open, onClick }: Props): JSX.Element {
+  const DefaultErrorMessage = (): JSX.Element => {
     return (
       <>
         <Typography variant="subtitle1">에러가 발생했습니다.</Typography>
@@ -36,12 +36,12 @@ function OneButtonModal({ title, message, buttonMessage, open, onClick }: Props)
     <Modal open={open}>
       <Box sx={style}>
         <Grid container spacing={2} mb={3}>
-          <Grid container item justifyContent="center">
+          <Grid container justifyContent="center">
             <Typography variant="h4" color="grey[800]">
               {title}
             </Typography>
           </Grid>
-          <Grid item>{message ? message : <DefaultErrorMessage />}</Grid>
+          <Grid>{message ? message : <DefaultErrorMessage />}</Grid>
         </Grid>
         <Grid container justifyContent="center">
           <Button fullWidth variant="contained" color="secondary" onClick={onClick}>

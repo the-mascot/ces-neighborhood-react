@@ -1,10 +1,11 @@
 import { memo } from 'react';
+
 // @mui
 import { useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
-function BackgroundShape() {
+function BackgroundShape(): JSX.Element {
   const theme = useTheme();
 
   const PRIMARY_MAIN = theme.palette.primary.main;

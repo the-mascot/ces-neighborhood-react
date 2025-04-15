@@ -1,15 +1,17 @@
-import Main from './common/main';
-import NavigationBar from 'src/layouts/common/navigation-bar';
 import * as React from 'react';
 import { useContext } from 'react';
-import { SettingContext } from 'src/context/setting-context';
+
 import Copyright from 'src/components/copyright';
+import { SettingContext } from 'src/context/setting-context';
+import NavigationBar from 'src/layouts/common/navigation-bar';
+
+import Main from './common/main';
 
 type Props = {
   children: React.ReactNode;
 };
 
-export default function MainLayout({ children }: Props) {
+export default function MainLayout({ children }: Props): JSX.Element {
   const { themeMode, toggleColorMode } = useContext(SettingContext);
 
   return (

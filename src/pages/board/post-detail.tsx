@@ -1,11 +1,13 @@
-import { Stack } from '@mui/system';
-import { Typography } from '@mui/material';
-import { useLocation, useNavigate, useParams } from 'react-router';
 import React, { useEffect, useState } from 'react';
+
+import { Typography } from '@mui/material';
+import { Stack } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
+import { useLocation, useNavigate, useParams } from 'react-router';
+
 import { fetchPost } from 'src/apis/board';
-import LoadingSpinner from 'src/components/loading/loading-spinner';
 import ErrorModal from 'src/components/error-modal';
+import LoadingSpinner from 'src/components/loading/loading-spinner';
 
 export default function PostDetail() {
   const { postNo } = useParams();
@@ -25,7 +27,7 @@ export default function PostDetail() {
   const { data, isLoading, isError } = useQuery({
     queryKey: [postNoState],
     queryFn: () => fetchPost(postNoState as number),
-    enabled: !!postNoState
+    enabled: !!postNoState,
   });
 
   /**-------------------------------- useQuery 결과처리 --------------------------------------*/
